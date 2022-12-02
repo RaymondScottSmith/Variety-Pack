@@ -13,6 +13,8 @@ public class PlayerJump : MonoBehaviour
 
     [SerializeField] private float maxJumpSpeed = 15f;
 
+    [SerializeField] private Sprite restingSprite, jumpingSprite;
+
     private float jumpSpeed;
 
     private bool isGrounded;
@@ -25,6 +27,10 @@ public class PlayerJump : MonoBehaviour
 
     private bool isChargingJump;
 
+    private bool firstJump;
+
+    private SpriteRenderer spriteRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,24 +42,19 @@ public class PlayerJump : MonoBehaviour
         trajProj.lineWidth = 0.025f;
         trajProj.iterationLimit = 300;
         rigidbody2D = GetComponent<Rigidbody2D>();
-
+        firstJump = true;
+        //isGrounded = true;
         jumpSpeed = minJumpSpeed;
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && contactNormal != Vector2.zero)
-        {
-            //Debug.Log("Should Be Jumping");
-            
-            rigidbody2D.AddForce(contactNormal * jumpSpeed, ForceMode2D.Impulse);
-            contactNormal = Vector2.zero;
-            isGrounded = false;
-        }
-        */
-
+        spriteRenderer.sprite = isGrounded ? restingSprite : jumpingSprite;
+        
+        
         if (Input.GetKey(KeyCode.Space) && isGrounded && contactNormal != Vector2.zero && !isChargingJump)
         {
             jumpSpeed = minJumpSpeed;
@@ -78,12 +79,13 @@ public class PlayerJump : MonoBehaviour
                 jumpSpeed = maxJumpSpeed;
             
             Debug.Log(jumpSpeed);
+            firstJump = false;
             rigidbody2D.AddForce(contactNormal * (jumpSpeed), ForceMode2D.Impulse);
             contactNormal = Vector2.zero;
             jumpSpeed = minJumpSpeed;
         }
         
-        if (isGrounded && isChargingJump)
+        if ((isGrounded || firstJump) && isChargingJump)
         {
             //set line duration to delta time so that it only lasts the length of a frame
             trajProj.debugLineDuration = Time.unscaledDeltaTime;
@@ -138,7 +140,9 @@ public class PlayerJump : MonoBehaviour
         }
         StopCoroutine(BuildJumpSpeed());
         jumpSpeed = minJumpSpeed;
-        isGrounded = false;
+        
+        if(!firstJump)
+            isGrounded = false;
         contactNormal = Vector2.zero;
     }
 }
