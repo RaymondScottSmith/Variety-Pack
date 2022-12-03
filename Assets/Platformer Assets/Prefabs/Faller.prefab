@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8049965439027431183}
   - component: {fileID: 8049965439027431182}
   - component: {fileID: 8049965439027431180}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Collider
   m_TagString: Jumpable
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ PlatformEffector2D:
   m_UseOneWayGrouping: 0
   m_SurfaceArc: 180
   m_UseSideFriction: 0
-  m_UseSideBounce: 1
+  m_UseSideBounce: 0
   m_SideArc: 1
 --- !u!114 &8049965439027431182
 MonoBehaviour:
@@ -81,7 +81,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0019204617, y: -0.06275952}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -92,7 +92,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.683023, y: 0.5033815}
   m_EdgeRadius: 0
 --- !u!1 &8049965440543036121
 GameObject:
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 8049965440543036123}
   - component: {fileID: 8049965440543036120}
   - component: {fileID: 8049965440543036117}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Faller
   m_TagString: Jumpable
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ Transform:
   m_GameObject: {fileID: 8049965440543036121}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.7, y: 1, z: 0}
-  m_LocalScale: {x: 3.5, y: 0.25, z: 1}
+  m_LocalScale: {x: 1.3050636, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8049965439027431181}
@@ -168,8 +168,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_SortingOrder: 30
+  m_Sprite: {fileID: 21300000, guid: 6dc2b8fe272f06f46ae423e3ac2edc37, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

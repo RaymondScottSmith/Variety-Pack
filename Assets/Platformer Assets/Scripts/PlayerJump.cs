@@ -14,12 +14,16 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private float maxJumpSpeed = 15f;
 
     [SerializeField] private Sprite restingSprite, jumpingSprite;
+    
+    [SerializeField] private AudioClip jumpSound;
+    
+    [SerializeField] private AudioClip deathSound;
 
     private float jumpSpeed;
 
     private bool isGrounded;
 
-    private Rigidbody2D rigidbody2D;
+    private Rigidbody2D rb2D;
 
     private Vector2 contactNormal;
 
@@ -31,9 +35,14 @@ public class PlayerJump : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
+    private AudioSource audioSource;
+
+    public bool lost;
+
     // Start is called before the first frame update
     void Start()
     {
+        lost = true;
         isChargingJump = false;
         trajProj = gameObject.AddComponent<TrajectoryPredictor>();
         trajProj.predictionType = TrajectoryPredictor.predictionMode.Prediction2D;
@@ -41,17 +50,23 @@ public class PlayerJump : MonoBehaviour
         trajProj.accuracy = 0.99f;
         trajProj.lineWidth = 0.025f;
         trajProj.iterationLimit = 300;
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        trajProj.checkForCollision = true;
+        trajProj.raycastMask = trajProj.raycastMask+8;
+        //trajProj.checkForCollision = false;
+        rb2D = GetComponent<Rigidbody2D>();
         firstJump = true;
         //isGrounded = true;
         jumpSpeed = minJumpSpeed;
-
+        audioSource = GetComponent<AudioSource>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (lost)
+            return;
         spriteRenderer.sprite = isGrounded ? restingSprite : jumpingSprite;
         
         
@@ -73,14 +88,18 @@ public class PlayerJump : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space) && isGrounded && contactNormal != Vector2.zero)
         {
+            if (firstJump)
+            {
+                PlatformerManager.Instance.StartTimer();
+            }
             isChargingJump = false;
             isGrounded = false;
             if (jumpSpeed > maxJumpSpeed)
                 jumpSpeed = maxJumpSpeed;
             
-            Debug.Log(jumpSpeed);
+            audioSource.PlayOneShot(jumpSound);
             firstJump = false;
-            rigidbody2D.AddForce(contactNormal * (jumpSpeed), ForceMode2D.Impulse);
+            rb2D.AddForce(contactNormal * (jumpSpeed), ForceMode2D.Impulse);
             contactNormal = Vector2.zero;
             jumpSpeed = minJumpSpeed;
         }
@@ -107,6 +126,16 @@ public class PlayerJump : MonoBehaviour
         {
             jumpSpeed = maxJumpSpeed;
         }
+    }
+
+    public IEnumerator LoseGame()
+    {
+        lost = false;
+        yield return new WaitForSeconds(0.05f);
+        audioSource.PlayOneShot(deathSound);
+        Debug.Log("Ending Sequence Here");
+        yield return new WaitForSeconds(1f);
+        PlatformerManager.Instance.LoseSetup();
     }
 
     void FixedUpdate()
@@ -140,7 +169,7 @@ public class PlayerJump : MonoBehaviour
         }
         StopCoroutine(BuildJumpSpeed());
         jumpSpeed = minJumpSpeed;
-        
+        isChargingJump = false;
         if(!firstJump)
             isGrounded = false;
         contactNormal = Vector2.zero;
