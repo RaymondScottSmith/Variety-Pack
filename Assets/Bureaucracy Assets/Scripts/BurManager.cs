@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+//using Debug = System.Diagnostics.Debug;
 
 public class BurManager : MonoBehaviour
 {
@@ -15,33 +16,58 @@ public class BurManager : MonoBehaviour
 
     public SeaCreature currentCreature;
 
+    public bool currentLying;
+
+    public static BurManager Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     
     // Start is called before the first frame update
     void Start()
     {
-        SpawnNewCreature(testCreatureNumber);
+        SpawnNewCreature();
     }
 
-    public void SpawnNewCreature(int creatureNum)
+    public void SpawnNewCreature()
     {
+        int creatureNum = Random.Range(0, creatures.Count);
         /*
         SeaCreature creature = creaturePrefabs[creatureNum].GetComponent<SeaCreature>();
         creature.AssignAnswers(false, "Quade", CreatureType.Whale, "I love cheerios.");
         Instantiate(creature.gameObject, creature.startPosition, creature.transform.rotation);
         */
-
-        currentCreature = creatures[0].creaturePrefab.GetComponent<SeaCreature>();
-        Instantiate(currentCreature.gameObject, currentCreature.startPosition, currentCreature.transform.rotation);
-
-        string randomName = creatures[0].validNames[Random.Range(0, creatures[0].validNames.Count)];
-        string randomFood = creatures[0].validFoods[Random.Range(0, creatures[0].validFoods.Count)];
-        currentCreature.AssignAnswers(false, randomName, creatures[0].creatureType, randomFood);
+        
+        currentCreature = creatures[creatureNum].creaturePrefab.GetComponent<SeaCreature>();
+        currentCreature = Instantiate(currentCreature.gameObject, currentCreature.startPosition, currentCreature.transform.rotation).GetComponent<SeaCreature>();
+        DialogueManager.Instance.EnterDialogueMode(creatures[creatureNum], currentLying);
+        
+        
+        string randomName = creatures[creatureNum].validNames[Random.Range(0, creatures[creatureNum].validNames.Count)];
+        string randomFood = creatures[creatureNum].validFoods[Random.Range(0, creatures[creatureNum].validFoods.Count)];
+        currentCreature.AssignAnswers(false, randomName, creatures[creatureNum].creatureType, randomFood);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void HitPassButton()
+    {
+        if (currentLying)
+        {
+            //Code to handle failure here
+        }
+        else
+        {
+            Debug.Log("Hit Pass Button");
+            currentCreature.Leave();
+        }
     }
 
     public void AskName()

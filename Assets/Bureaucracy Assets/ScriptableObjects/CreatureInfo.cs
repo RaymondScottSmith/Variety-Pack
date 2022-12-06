@@ -13,5 +13,11 @@ public class CreatureInfo : ScriptableObject
     public List<string> validNames;
 
     public List<string> validFoods;
-    
+
+    public string waterType;
+
+    public string origin;
+
+    public string sportTeam;
+
 }

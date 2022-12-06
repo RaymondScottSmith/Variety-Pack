@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15e4a2dc77ae85f4e91a57095fde0bda, type: 3}
-  m_Name: Whale
+  m_Name: Dugong
   m_EditorClassIdentifier: 
-  creaturePrefab: {fileID: 4851209579594954676, guid: 6d443f2697f04a54b8d25cabfac55d59, type: 3}
-  creatureType: 0
+  creaturePrefab: {fileID: 8082482295153099979, guid: c255ac412b3e4d94385ed24c91f6e912, type: 3}
+  creatureType: 2
   validNames:
-  - Quade
-  - Quinn
-  - Quale
-  - Qualm
-  - Quoth
-  - Quers
-  - Queem
+  - Perth
+  - Paisley
+  - Penelope
+  - Parker
+  - Poppin
+  - Putley
+  - Piper
   validFoods:
-  - croutons
-  - sweet peas
-  - tarantulas
-  waterType: rose water
-  origin: Wales
-  sportTeam: Mexico City Pandas
+  - trees
+  - spaghetti
+  - tofu
+  waterType: salt water
+  origin: Japan
+  sportTeam: Hong Kong Tardigrades

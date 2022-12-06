@@ -43,7 +43,7 @@ public class SeaCreature : MonoBehaviour
     void Start()
     {
         startTime = Time.time;
-        
+        leaving = false;
         // Calculate the journey length.
         entryLength = Vector3.Distance(startPosition, windowPosition);
         exitLength = Vector3.Distance(windowPosition, leavePosition);
@@ -69,16 +69,23 @@ public class SeaCreature : MonoBehaviour
     {
         return myAnswers.food;
     }
+
+    public void Leave()
+    {
+        
+        leaving = true;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
 
         if (!arrived)
         {
-            if (transform.position == windowPosition)
+            if (Vector3.Distance(transform.position, windowPosition) < 0.1f)
             {
                 arrived = true;
                 startTime = 0f;
+                DialogueManager.Instance.StartDialogue();
                 return;
             }
             // Distance moved equals elapsed time times speed..
@@ -110,6 +117,7 @@ public class SeaCreature : MonoBehaviour
 
         if (Vector3.Distance(transform.position, leavePosition) < 0.1f)
         {
+            BurManager.Instance.SpawnNewCreature();
             Destroy(gameObject);
         }
         

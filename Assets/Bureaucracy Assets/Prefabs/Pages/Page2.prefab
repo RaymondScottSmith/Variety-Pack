@@ -277,12 +277,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Whales favorite food is croutons.
+  m_text: 'Whales typically eat a diet of croutons, sweet peas, and tarantulas.
 
-    All Whales have names that begin
-    with the letter Q.
+    All
+    whales names begin with the letter Q.
 
-    Whales are lavender scented water creatures.'
+    Whales are from Wales.
+
+    Whales
+    are huge fans of the Mexico City Pandas.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
