@@ -27,13 +27,15 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] private List<string> intros;
     [SerializeField] private List<string> whaleNames;
-    [SerializeField] private List<string> names;
+    public List<string> dolphinNames;
 
     [SerializeField] private List<string> allWaterTypes;
     [SerializeField] private List<string> allOrigins;
     [SerializeField] private List<string> allTeams;
     [SerializeField] private List<string> allFood;
-    
+
+    [SerializeField] private GameObject canvas;
+
     string species = "";
     string food = "";
     string water = "";
@@ -51,9 +53,19 @@ public class DialogueManager : MonoBehaviour
         Instance = this;
     }
 
+    public void HideCanvas()
+    {
+        canvas.gameObject.SetActive(false);
+    }
+
+    public void ShowCanvas()
+    {
+        canvas.gameObject.SetActive(true);
+    }
+
     void Start()
     {
-        names.AddRange(whaleNames);
+        HideCanvas();
         int index = 0;
         choicesText = new TMP_Text[choices.Length];
         foreach (GameObject choice in choices)
@@ -66,10 +78,7 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(CreatureInfo newCreature, bool isLying)
     {
-       
-        
-        
-        
+
         /*
         if (newCreature.creatureType == CreatureType.Whale)
             randName = whaleNames[Random.Range(0, whaleNames.Count)];
@@ -103,9 +112,59 @@ public class DialogueManager : MonoBehaviour
         
         if (isLying)
         {
-            water = "rose water";
-            food = "babies";
-            team = "Miami Dolphins";
+            int lyingTrait = Random.Range(0, 6);
+            switch (lyingTrait)
+            {
+                case 0:
+                    List<string> names = new List<string>();
+                    names.AddRange(dolphinNames);
+                    foreach (string oldName in newCreature.validNames)
+                    {
+                        names.Remove(oldName);
+                    }
+                    randName = names[Random.Range(0, names.Count)];
+                    break;
+                case 1:
+                    List<string> newFoods = new List<string>();
+                    newFoods.AddRange(allFood);
+                    foreach (string oldFood in newCreature.validFoods)
+                    {
+                        newFoods.Remove(oldFood);
+                    }
+                    food = newFoods[Random.Range(0, newFoods.Count)];
+                    break;
+                case 2:
+                    CreatureType newType = new CreatureType();
+                    newType = newCreature.creatureType;
+                    int eExit = 0;
+                    while (newType == newCreature.creatureType)
+                    {
+                        newType = (CreatureType)Random.Range(0, 7);
+                        eExit++;
+                        if (eExit > 10)
+                            break;
+                    }
+                    species = GetSpeciesName(newType);
+                    break;
+                case 3:
+                    List<string> newWaters = new List<string>();
+                    newWaters.AddRange(allWaterTypes);
+                    newWaters.Remove(water);
+                    water = newWaters[Random.Range(0, newWaters.Count)];
+                    break;
+                case 4:
+                    List<string> newOrigin = new List<string>();
+                    newOrigin.AddRange(allOrigins);
+                    newOrigin.Remove(origin);
+                    origin = newOrigin[Random.Range(0, newOrigin.Count)];
+                    break;
+                case 5:
+                    List<string> newTeam = new List<string>();
+                    newTeam.AddRange(allTeams);
+                    newTeam.Remove(team);
+                    team = newTeam[Random.Range(0, newTeam.Count)];
+                    break;
+            }
         }
 
 
@@ -173,7 +232,7 @@ public class DialogueManager : MonoBehaviour
         return result;
     }
 
-    private void ExitDialogueMode()
+    public void ExitDialogueMode()
     {
         dialogueIsPlaying = false;
     }

@@ -720,7 +720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fd3a90fe7466f4fb84d03aa788faa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: 493, y: 17.29, z: 4.1}
+  startPosition: {x: 497.4, y: 17.29, z: 4.1}
   windowPosition: {x: 497.4, y: 17.29, z: 4.1}
   leavePosition: {x: 504, y: 17.29, z: 4.1}
   speed: 3

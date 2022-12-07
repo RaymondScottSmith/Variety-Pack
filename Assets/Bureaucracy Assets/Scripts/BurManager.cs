@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using TMPro;
 using UnityEngine;
 //using Debug = System.Diagnostics.Debug;
@@ -18,8 +19,13 @@ public class BurManager : MonoBehaviour
 
     public bool currentLying;
 
+    [SerializeField] private GameObject dolphinPrefab;
+
     public static BurManager Instance;
 
+    public GameObject net;
+
+    [SerializeField] private Animator lightAnimator;
     void Awake()
     {
         Instance = this;
@@ -29,6 +35,11 @@ public class BurManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        foreach (CreatureInfo creature in creatures)
+        {
+            DialogueManager.Instance.dolphinNames.AddRange(creature.validNames);
+        }
+        
         SpawnNewCreature();
     }
 
@@ -59,15 +70,74 @@ public class BurManager : MonoBehaviour
 
     public void HitPassButton()
     {
+        DialogueManager.Instance.HideCanvas();
         if (currentLying)
         {
+            StartCoroutine(DolphinTaunt());
+            Debug.Log("Handle Failure Here");
             //Code to handle failure here
         }
         else
         {
             Debug.Log("Hit Pass Button");
-            currentCreature.Leave();
+            StartCoroutine(CreatureLeave());
         }
+    }
+
+    public void HitNetButton()
+    {
+        DialogueManager.Instance.HideCanvas();
+        if (currentLying)
+        {
+            StartCoroutine(CatchDolphin());
+            //Add code to catch dolphin
+        }
+        else
+        {
+            StartCoroutine(AngryCreatureLeave());
+            Debug.Log("Add failure consequence for false accusation here.");
+        }
+    }
+
+    private IEnumerator CatchDolphin()
+    {
+        
+        Destroy(currentCreature.gameObject);
+        currentCreature = Instantiate(dolphinPrefab).GetComponent<SeaCreature>();
+        currentCreature.isDolphin = true;
+        yield return new WaitForSeconds(1f);
+        net.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        commScreen.text = "Drat! You caught me. Curse you Tuna!";
+        yield return new WaitForSeconds(3f);
+        Debug.Log("Add code for win condition");
+    }
+    
+    private IEnumerator AngryCreatureLeave()
+    {
+        lightAnimator.SetTrigger("Light");
+        commScreen.text = "How Dare You! You'll be hearing from my attorneys!";
+        yield return new WaitForSeconds(2f);
+        currentCreature.Leave();
+    }
+
+    private IEnumerator DolphinTaunt()
+    {
+        
+        Destroy(currentCreature.gameObject);
+        currentCreature = Instantiate(dolphinPrefab).GetComponent<SeaCreature>();
+        currentCreature.isDolphin = true;
+        //currentCreature.arrived = true;
+        commScreen.text = "Hah! You fell for it you stupid Tuna!";
+        yield return new WaitForSeconds(3f);
+        currentCreature.Leave();
+    }
+
+    private IEnumerator CreatureLeave()
+    {
+        commScreen.text = "Thanks. Now I'm late!";
+        yield return new WaitForSeconds(1f);
+        currentCreature.Leave();
     }
 
     public void AskName()

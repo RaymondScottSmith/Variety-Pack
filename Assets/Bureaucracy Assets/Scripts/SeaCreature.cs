@@ -21,6 +21,8 @@ public class SeaCreature : MonoBehaviour
     public bool arrived;
 
     public bool leaving;
+
+    public bool isDolphin = false;
     
     struct Answers
     {
@@ -85,7 +87,15 @@ public class SeaCreature : MonoBehaviour
             {
                 arrived = true;
                 startTime = 0f;
-                DialogueManager.Instance.StartDialogue();
+                if (!isDolphin)
+                {
+                    DialogueManager.Instance.StartDialogue();
+                    DialogueManager.Instance.ShowCanvas();
+                }
+                else
+                {
+                    DialogueManager.Instance.HideCanvas();
+                }
                 return;
             }
             // Distance moved equals elapsed time times speed..

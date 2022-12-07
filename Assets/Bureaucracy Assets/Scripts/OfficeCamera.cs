@@ -17,9 +17,19 @@ public class OfficeCamera : MonoBehaviour
 
     [SerializeField] private List<BoxCollider> boxColliders;
 
+    //public bool freeSwitch;
+
     private bool lookingDesk = false;
 
+    public static OfficeCamera Instance;
+
     private Animator cameraAnimator;
+
+
+    void Awake()
+    {
+        Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +48,13 @@ public class OfficeCamera : MonoBehaviour
         {
             lookingDesk = !lookingDesk;
             cameraAnimator.SetBool("DeskView", lookingDesk);
+            
+            if (lookingDesk)
+                DialogueManager.Instance.HideCanvas();
+            else
+            {
+                DialogueManager.Instance.ShowCanvas();
+            }
         }
 
         if (lookingDesk && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
