@@ -44,6 +44,12 @@ public class DialogueManager : MonoBehaviour
     string origin = "";
     string team = "";
 
+    [SerializeField] private AudioClip longBubbleSound;
+
+    [SerializeField] private List<AudioClip> shortBubbleSounds;
+
+    private AudioSource myAudioSource;
+
     private void Awake()
     {
         if (Instance != null)
@@ -65,6 +71,7 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
+        myAudioSource = GetComponent<AudioSource>();
         HideCanvas();
         int index = 0;
         choicesText = new TMP_Text[choices.Length];
@@ -184,6 +191,7 @@ public class DialogueManager : MonoBehaviour
         currentStory.EvaluateFunction("setWater", water);
         currentStory.EvaluateFunction("setOrigin", origin);
         currentStory.EvaluateFunction("setTeam", team);
+        myAudioSource.PlayOneShot(longBubbleSound);
         
         ContinueStory();
     }
@@ -192,6 +200,8 @@ public class DialogueManager : MonoBehaviour
     public void MakeChoice(int choiceNumber)
     {
         currentStory.ChooseChoiceIndex(choiceNumber);
+        
+        myAudioSource.PlayOneShot(shortBubbleSounds[Random.Range(0, shortBubbleSounds.Count)]);
         ContinueStory();
     }
 

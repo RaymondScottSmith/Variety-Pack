@@ -23,6 +23,8 @@ public class SeaCreature : MonoBehaviour
     public bool leaving;
 
     public bool isDolphin = false;
+
+    private bool removingDolphin;
     
     struct Answers
     {
@@ -89,6 +91,7 @@ public class SeaCreature : MonoBehaviour
                 startTime = 0f;
                 if (!isDolphin)
                 {
+                    OfficeCamera.Instance.freeSwitch = true;
                     DialogueManager.Instance.StartDialogue();
                     DialogueManager.Instance.ShowCanvas();
                 }
@@ -110,6 +113,7 @@ public class SeaCreature : MonoBehaviour
 
         if (leaving)
         {
+            OfficeCamera.Instance.freeSwitch = false;
             if (startTime == 0f)
             {
                 startTime = Time.time;
@@ -125,12 +129,33 @@ public class SeaCreature : MonoBehaviour
             transform.position = Vector3.Slerp(windowPosition, leavePosition, fractionOfJourney);
         }
 
+        if (removingDolphin)
+        {
+            BurManager.Instance.net.gameObject.SetActive(false);
+            Vector3 position = transform.position;
+            transform.position = new Vector3(position.x, position.y + speed * Time.deltaTime, position.z);
+            if (transform.position.y > 19.5f)
+            {
+                BurManager.Instance.SpawnNewCreature();
+                Destroy(gameObject);
+            }
+        }
+
         if (Vector3.Distance(transform.position, leavePosition) < 0.1f)
         {
+            if (isDolphin)
+            {
+                OfficeCamera.Instance.TurnOnMusic();
+            }
             BurManager.Instance.SpawnNewCreature();
             Destroy(gameObject);
         }
         
         
+    }
+
+    public void RemoveCaughtDolphin()
+    {
+        removingDolphin = true;
     }
 }

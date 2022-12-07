@@ -17,13 +17,15 @@ public class OfficeCamera : MonoBehaviour
 
     [SerializeField] private List<BoxCollider> boxColliders;
 
-    //public bool freeSwitch;
+    public bool freeSwitch;
 
     private bool lookingDesk = false;
 
     public static OfficeCamera Instance;
 
     private Animator cameraAnimator;
+
+    private AudioSource myAudioSource;
 
 
     void Awake()
@@ -33,6 +35,7 @@ public class OfficeCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        myAudioSource = GetComponent<AudioSource>();
         cameraAnimator = GetComponent<Animator>();
     }
 
@@ -44,7 +47,7 @@ public class OfficeCamera : MonoBehaviour
             col.enabled = lookingDesk;
         }
         
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && freeSwitch)
         {
             lookingDesk = !lookingDesk;
             cameraAnimator.SetBool("DeskView", lookingDesk);
@@ -71,5 +74,15 @@ public class OfficeCamera : MonoBehaviour
     {
         lookingDesk = !lookingDesk;
         cameraAnimator.SetBool("DeskView", lookingDesk);
+    }
+
+    public void TurnOffMusic()
+    {
+        myAudioSource.Stop();
+    }
+
+    public void TurnOnMusic()
+    {
+        myAudioSource.Play();
     }
 }
