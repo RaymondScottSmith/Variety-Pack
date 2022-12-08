@@ -10,11 +10,16 @@ public class PinballPlunger : MonoBehaviour, IPointerClickHandler
 
     private Rigidbody2D ballBody;
 
+    private AudioSource myAudioSource;
+
     [SerializeField] private float speed = 30f;
+
+    [SerializeField]
+    private AudioClip launchSound;
     // Start is called before the first frame update
     void Start()
     {
-        
+        myAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -22,7 +27,7 @@ public class PinballPlunger : MonoBehaviour, IPointerClickHandler
     {
         if (touchingBall && ballBody != null && Input.GetKeyUp(KeyCode.Space))
         {
-            ballBody.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
+            StartCoroutine(LaunchBall());
         }
     }
 
@@ -31,15 +36,21 @@ public class PinballPlunger : MonoBehaviour, IPointerClickHandler
         Debug.Log("On Mouse Down");
         if (touchingBall && ballBody != null)
         {
-            ballBody.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
+            StartCoroutine(LaunchBall());
         }
+    }
+
+    private IEnumerator LaunchBall()
+    {
+        myAudioSource.PlayOneShot(launchSound);
+        yield return new WaitForSeconds(0.5f);
+        ballBody.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
     }
 
     void OnCollisionStay2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ball"))
         {
-            Debug.Log("Detecting Collision");
             touchingBall = true;
             ballBody = col.gameObject.GetComponent<Rigidbody2D>();
         }
