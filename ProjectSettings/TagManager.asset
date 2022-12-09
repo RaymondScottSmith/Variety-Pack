@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Jumpable
   - Ball
+  - Wall
   layers:
   - Default
   - TransparentFX

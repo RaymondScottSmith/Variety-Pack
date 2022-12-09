@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PinballManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PinballManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text livesText;
 
+    [SerializeField] private TMP_Text scoreText;
+
     [Header("Other")] [SerializeField] private Transform ballSpawnLocation;
     [SerializeField] private int startingLives = 3;
     [SerializeField] private TigerCage tigerCage;
@@ -20,6 +23,8 @@ public class PinballManager : MonoBehaviour
     public static PinballManager Instance;
 
     private int lives;
+
+    private int score;
 
     void Awake()
     {
@@ -35,9 +40,15 @@ public class PinballManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        score = 0;
         SpawnBall();
         lives = startingLives;
         livesText.text = "Lives: " + lives;
+    }
+
+    public void ChangeScore(int addedValue)
+    {
+        score += addedValue;
     }
 
     public void DestroyBall(GameObject ball)
@@ -63,6 +74,12 @@ public class PinballManager : MonoBehaviour
         }
     }
 
+    public void BallInHole(GameObject ball)
+    {
+        Destroy(ball);
+        SpawnBall();
+        Debug.Log("One ball now stored");
+    }
     public void UpdateLives(int change)
     {
         lives += change;
@@ -71,6 +88,11 @@ public class PinballManager : MonoBehaviour
         {
             Debug.Log("Lose Code Here");
         }
+    }
+
+    private void FixedUpdate()
+    {
+        scoreText.text = score.ToString();
     }
 
     public void SpawnBall()

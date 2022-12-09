@@ -12,6 +12,8 @@ public class PinballPlunger : MonoBehaviour, IPointerClickHandler
 
     private AudioSource myAudioSource;
 
+    private Animator myAnimator;
+
     [SerializeField] private float speed = 30f;
 
     [SerializeField]
@@ -19,7 +21,8 @@ public class PinballPlunger : MonoBehaviour, IPointerClickHandler
     // Start is called before the first frame update
     void Start()
     {
-        myAudioSource = GetComponent<AudioSource>();
+        myAudioSource = GetComponentInChildren<AudioSource>();
+        myAnimator = GetComponentInParent<Animator>();
     }
 
     // Update is called once per frame
@@ -42,8 +45,11 @@ public class PinballPlunger : MonoBehaviour, IPointerClickHandler
 
     private IEnumerator LaunchBall()
     {
+        myAnimator.SetTrigger("Pull");
         myAudioSource.PlayOneShot(launchSound);
         yield return new WaitForSeconds(0.5f);
+        
+        yield return new WaitForSeconds(0.45f);
         ballBody.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
     }
 

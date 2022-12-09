@@ -78,6 +78,18 @@ MonoBehaviour:
           m_StringArgument: Hit
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6248210419766374060}
+        m_TargetAssemblyTypeName: HumanCollider, Assembly-CSharp
+        m_MethodName: UpdateScore
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6248210419766374060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalSprite: {fileID: 21300000, guid: 5f029b43b890fad45883732cf9420a61, type: 3}
   hitSprite: {fileID: 21300000, guid: 27a48f8107641704b84e13f384f81997, type: 3}
+  scoreValue: 10
 --- !u!212 &6248210419766374054
 SpriteRenderer:
   m_ObjectHideFlags: 0
