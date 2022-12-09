@@ -16,6 +16,8 @@ public class PinballPlunger : MonoBehaviour, IPointerClickHandler
 
     [SerializeField] private float speed = 30f;
 
+    [SerializeField] private float speedVariance = 5f;
+
     [SerializeField]
     private AudioClip launchSound;
     // Start is called before the first frame update
@@ -50,7 +52,9 @@ public class PinballPlunger : MonoBehaviour, IPointerClickHandler
         yield return new WaitForSeconds(0.5f);
         
         yield return new WaitForSeconds(0.45f);
-        ballBody.AddForce(Vector2.up * speed, ForceMode2D.Impulse);
+
+        float speedOffset = Random.Range(-speedVariance, speedVariance);
+        ballBody.AddForce(Vector2.up * (speed + speedVariance), ForceMode2D.Impulse);
     }
 
     void OnCollisionStay2D(Collision2D col)
