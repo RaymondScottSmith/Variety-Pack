@@ -102,9 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f490db3528040b4aaa5a46592b5a0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSprite: {fileID: 21300000, guid: 58da63dd454a318409dd574f6e96b125, type: 3}
-  hitSprite: {fileID: 21300000, guid: 6d984dcd974d99447968e3d7c9c8377e, type: 3}
-  scoreValue: 10
+  normalSprite: {fileID: 21300000, guid: eecbeba26f86aab47b8290b2a637c446, type: 3}
+  hitSprite: {fileID: 21300000, guid: 920773ff7ffe1b341a1a2513e2a8980d, type: 3}
+  scoreValue: 100
 --- !u!212 &6146333848345525456
 SpriteRenderer:
   m_ObjectHideFlags: 0

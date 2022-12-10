@@ -8,6 +8,7 @@ public class BallReturn : MonoBehaviour
     private Transform ballSpawnLocation;
 
     [SerializeField] private TigerCage cage;
+    
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Ball"))

@@ -20,7 +20,8 @@ public class SuperBounce : MonoBehaviour
         if (col.gameObject.CompareTag("Ball"))
         {
             myAudioSource.Play();
-            myAnimator.SetTrigger("Shake");
+            if (myAnimator != null)
+                myAnimator.SetTrigger("Shake");
             Rigidbody2D rb = col.gameObject.GetComponent<Rigidbody2D>();
             Vector2 angle = col.GetContact(0).normal;
             rb.AddForce(angle * ricochetForce, ForceMode2D.Impulse);
