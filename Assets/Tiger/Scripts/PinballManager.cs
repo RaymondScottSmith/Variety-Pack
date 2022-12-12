@@ -202,7 +202,7 @@ public class PinballManager : MonoBehaviour
 
     public void CircusMode()
     {
-        Debug.Log("Circus Mode is on!");
+        //Debug.Log("Circus Mode is on!");
         StartCoroutine(RunCircusMode());
         
     }
@@ -273,7 +273,6 @@ public class PinballManager : MonoBehaviour
         if (lives <= 0)
         {
             return false;
-            Debug.Log("Lose Code Here");
         }
 
         return true;

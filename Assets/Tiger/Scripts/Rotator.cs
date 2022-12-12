@@ -15,6 +15,11 @@ public class Rotator : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
     }
 
+    public void SetSpeed(float speed)
+    {
+        rotationSpeed = speed;
+    }
+
     void FixedUpdate()
     {
         if (rotating)

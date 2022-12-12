@@ -67,12 +67,12 @@ public class BallHole : MonoBehaviour
         Vector2 direction = new Vector2();
         if (directionDecider == 0)
         {
-            Debug.Log("Launching Left");
+            //Debug.Log("Launching Left");
             direction = Vector2.left;
         }
         else
         {
-            Debug.Log("Launching Right");
+            //Debug.Log("Launching Right");
             direction = Vector2.right;
         }
         newBall.GetComponent<Rigidbody2D>().AddForce(direction * launchSpeed, ForceMode2D.Impulse);
