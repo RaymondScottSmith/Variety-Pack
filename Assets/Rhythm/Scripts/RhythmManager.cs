@@ -11,9 +11,15 @@ public class RhythmManager : MonoBehaviour
     [SerializeField] private GameObject redBack, blueBack, greenBack, yellowBack;
     [SerializeField] private int startingMultiplier = 1;
 
-    [SerializeField] private TMP_Text scoreText, multText, hScoreText, finalScoreText, japScoreText;
+    [SerializeField] private TMP_Text scoreText, multText, hScoreText, finalScoreText;
+
+    [SerializeField] private List<TMP_Text> highScores;
 
     [SerializeField] private GameObject endPanel, startPanel;
+
+    [SerializeField] private List<Song> songs;
+
+    private Song currentSong;
 
     private int scoreMultiplier, score, scoreCount, highScore;
 
@@ -30,8 +36,13 @@ public class RhythmManager : MonoBehaviour
 
         scoreCount = 0;
         scoreMultiplier = startingMultiplier;
-        highScore = PlayerPrefs.GetInt("RhythmScore_Jap");
-        japScoreText.text = "High Score: " + highScore;
+
+        for (int i = 0; i < highScores.Count; i++)
+        {
+            highScores[i].text = "High Score: " + PlayerPrefs.GetInt(songs[i].pPScoreName);
+        }
+        //highScore = PlayerPrefs.GetInt("RhythmScore_Jap");
+        //japScoreText.text = "High Score: " + highScore;
         endPanel.SetActive(false);
         startPanel.SetActive(true);
 
@@ -39,12 +50,10 @@ public class RhythmManager : MonoBehaviour
 
     public void StartSong(int songNumber)
     {
-        if (songNumber == 1)
-        {
-            startPanel.SetActive(false);
-            Conductor.Instance.StartSong(songNumber);
-        }
-        
+        startPanel.SetActive(false);
+        Conductor.Instance.StartSong(songs[songNumber]);
+        highScore = PlayerPrefs.GetInt(songs[songNumber].pPScoreName);
+        currentSong = songs[songNumber];
     }
 
     public void ResetGame()
@@ -60,7 +69,7 @@ public class RhythmManager : MonoBehaviour
         {
             highScore = score;
             endPanel.GetComponentInChildren<Animator>().SetBool("Flashing", true);
-            PlayerPrefs.SetInt("RhythmScore_Jap", highScore);
+            PlayerPrefs.SetInt(currentSong.pPScoreName, highScore);
         }
         hScoreText.text = highScore.ToString();
     }

@@ -27,6 +27,11 @@ public class Lane : MonoBehaviour
     {
         
     }
+
+    public void AssignKey(Melanchall.DryWetMidi.MusicTheory.NoteName noteName)
+    {
+        noteRestriction = noteName;
+    }
     public void SetTimeStamps(Melanchall.DryWetMidi.Interaction.Note[] array)
     {
         foreach (var note in array)

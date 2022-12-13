@@ -21,6 +21,25 @@ public class Flipper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool leftInput = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.LeftShift);
+        bool rightInput = Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.RightShift);
+
+        if ((leftFlipper && leftInput) || (!leftFlipper && rightInput))
+        {
+            if (!hasSounded)
+            {
+                hasSounded = true;
+                myAudioSource.Play();
+            }
+            GetComponent<HingeJoint2D>().useMotor = true;
+        }
+        else
+        {
+            hasSounded = false;
+            GetComponent<HingeJoint2D>().useMotor = false;
+        }
+        
+        /*
         if ((leftFlipper && Input.GetKey(KeyCode.LeftArrow)) || (!leftFlipper && Input.GetKey(KeyCode.RightArrow)))
         {
             if (!hasSounded)
@@ -35,5 +54,7 @@ public class Flipper : MonoBehaviour
             hasSounded = false;
             GetComponent<HingeJoint2D>().useMotor = false;
         }
+        
+        */
     }
 }

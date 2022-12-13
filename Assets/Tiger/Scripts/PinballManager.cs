@@ -57,6 +57,8 @@ public class PinballManager : MonoBehaviour
     private int highScore;
 
     private AudioSource musicSource;
+
+    private bool gameOver;
     
 
     void Awake()
@@ -73,6 +75,7 @@ public class PinballManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameOver = false;
         score = 0;
         SpawnBall();
         lives = startingLives;
@@ -282,7 +285,7 @@ public class PinballManager : MonoBehaviour
     {
         scoreText.text = score.ToString();
 
-        if (!musicSource.isPlaying)
+        if (!musicSource.isPlaying && !gameOver)
         {
             if (neonAnnounce.activeSelf)
             {
@@ -298,6 +301,7 @@ public class PinballManager : MonoBehaviour
 
     private void LoseGame()
     {
+        gameOver = true;
         if (score > highScore)
         {
             highScore = score;

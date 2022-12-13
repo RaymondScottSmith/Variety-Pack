@@ -4990,7 +4990,7 @@ MonoBehaviour:
   - {fileID: 1919090492}
   - {fileID: 275986441}
   circus: {fileID: 492203210}
-  circusModeDuration: 30
+  circusModeDuration: 45
   circleRotator: {fileID: 1118592082}
   holeLock: {fileID: 116509006}
   normalMusic: {fileID: 8300000, guid: 68ddd2bb3b4c98f47812ad040d3acbd1, type: 3}
@@ -5024,7 +5024,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -10154,7 +10154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6287606101168186072, guid: 18a719298da26b94bb3357d4dc5a48a1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.162
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: 6287606101168186072, guid: 18a719298da26b94bb3357d4dc5a48a1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11715,7 +11715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6287606101168186072, guid: 18a719298da26b94bb3357d4dc5a48a1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.162
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: 6287606101168186072, guid: 18a719298da26b94bb3357d4dc5a48a1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11869,7 +11869,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6248210419766374055, guid: 6ebeb42567657124bb10110b4af03c51, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.3985714
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 6248210419766374055, guid: 6ebeb42567657124bb10110b4af03c51, type: 3}
       propertyPath: m_LocalPosition.z

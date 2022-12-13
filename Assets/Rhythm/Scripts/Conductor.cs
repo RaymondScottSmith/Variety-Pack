@@ -49,6 +49,8 @@ public class Conductor : MonoBehaviour
     //The index of the next note to be spawned
     private int nextIndex = 0;
 
+    private Song currentSong;
+
 
     //Below are from new version
 
@@ -104,22 +106,26 @@ public class Conductor : MonoBehaviour
         
     }
 
-    public void StartSong(int songNumber)
+    public void StartSong(Song song)
     {
-        if (songNumber == 1)
+        currentSong = song;
+        musicStartDelay = song.SongStartDelay;
+        for (int i = 0; i < 4; i++)
         {
-            ReadMidiFromFile();
-        
-            musicStarted = true;
-            musicScore = GetComponent<AudioSource>();
-            secPerBeat = 60f / songBpm;
-            dspSongTime = (float)AudioSettings.dspTime;
+            lanes[i].AssignKey(song.notes[i]);
         }
+        ReadMidiFromFile();
+        
+        musicStarted = true;
+        musicScore = GetComponent<AudioSource>();
+        musicScore.clip = song.songMP3;
+        secPerBeat = 60f / songBpm;
+        dspSongTime = (float)AudioSettings.dspTime;
     }
 
     private void ReadMidiFromFile()
     {
-        midiFile = MidiFile.Read(AssetDatabase.GetAssetPath(myMidi));
+        midiFile = MidiFile.Read(AssetDatabase.GetAssetPath(currentSong.midiFile));
         //Invoke(nameof(GetDataFromMidi), songDelayInSeconds);
         GetDataFromMidi();
     }
@@ -129,14 +135,20 @@ public class Conductor : MonoBehaviour
         var noteHolder = midiFile.GetNotes();
         var array = new Melanchall.DryWetMidi.Interaction.Note[noteHolder.Count];
         noteHolder.CopyTo(array,0);
-        StartCoroutine(StartMusic((int)musicStartDelay));
+        StartCoroutine(StartMusic(array));
+
+        
+        //StartMusic();
+    }
+
+    private IEnumerator LoadLaneTimeStamps(Melanchall.DryWetMidi.Interaction.Note[] array)
+    {
+        yield return new WaitForSeconds(0);
         foreach (Lane lane in lanes)
         {
             lane.SetTimeStamps(array);
 
         }
-
-        //StartMusic();
     }
 
     public void LaneComplete()
@@ -170,19 +182,33 @@ public class Conductor : MonoBehaviour
 
     
 
-    private IEnumerator StartMusic(int delay)
+    private IEnumerator StartMusic(Melanchall.DryWetMidi.Interaction.Note[] array)
     {
-        for (int i = 0; i < delay; i++)
+        for (int i = 0; i < 3; i++)
         {
-            timerText.text = (delay - i).ToString();
+            timerText.text = (3 - i).ToString();
             yield return new WaitForSeconds(1f);
         }
         
         musicStarted = true;
-        musicScore.Play();
+
+        StartCoroutine(MusicDelay());
         timerText.text = "Go!";
+        StartCoroutine(ClearText());
+        
+        StartCoroutine(LoadLaneTimeStamps(array));
+    }
+
+    private IEnumerator ClearText()
+    {
         yield return new WaitForSeconds(0.5f);
         timerText.text = "";
+    }
+
+    private IEnumerator MusicDelay()
+    {
+        yield return new WaitForSeconds(musicStartDelay);
+        musicScore.Play();
     }
 
     public IEnumerator PauseMusic()
