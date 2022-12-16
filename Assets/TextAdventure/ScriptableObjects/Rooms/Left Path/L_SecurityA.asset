@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d756cd652d8b54a4f9fe8967619a9f30, type: 3}
+  m_Name: L_SecurityA
+  m_EditorClassIdentifier: 
+  description: You are standing in some sort of security station. Unfortunately all
+    of the weapons are missing.
+  roomName: security
+  exits:
+  - keyString: east
+    exitDescription: There is a door to the east.
+    valueRoom: {fileID: 11400000, guid: 4d096fbf79b65da4593929eb1d18ffed, type: 2}
+  - keyString: north
+    exitDescription: There is a door to the north.
+    valueRoom: {fileID: 11400000, guid: 02e514f3e3972874393b99b29c87bdb9, type: 2}
+  - keyString: south
+    exitDescription: There is a hallway to the south.
+    valueRoom: {fileID: 11400000, guid: a1c61395509325941ab7deb816647432, type: 2}
+  interObjectsInRoom: []

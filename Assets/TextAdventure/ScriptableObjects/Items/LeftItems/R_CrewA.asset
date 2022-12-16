@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf57462ee564344785748bb3662bf46, type: 3}
+  m_Name: R_CrewA
+  m_EditorClassIdentifier: 
+  noun: crewmember
+  description: 
+  interactions:
+  - inputAction: {fileID: 11400000, guid: f3b9086767e60e74bb6bab07cc2800a4, type: 2}
+    textResponse: The crewmember seems to be searching for something in the clutter
+      of the other room. They occasionally glance at you and return to searching.
+      You realize the glass separating you is soundproof.
+    actionResponses: []

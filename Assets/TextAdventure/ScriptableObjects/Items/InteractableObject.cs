@@ -10,4 +10,5 @@ public class InteractableObject : ScriptableObject
     public string description = "Description in room.";
 
     public Interaction[] interactions;
+    
 }

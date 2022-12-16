@@ -16,9 +16,10 @@ MonoBehaviour:
     Doors are closing on each pathway. You won't be able to come back. Choose now.
   roomName: Start Room
   exits:
-  - keyString: left
-    exitDescription: You see a pathway to the left with blast doors closing.
+  - keyString: west
+    exitDescription: You see a pathway to the west with blast doors closing.
     valueRoom: {fileID: 11400000, guid: a1c61395509325941ab7deb816647432, type: 2}
-  - keyString: right
-    exitDescription: You see a pathway to the right with blast doors closing.
+  - keyString: east
+    exitDescription: You see a pathway to the east with blast doors closing.
     valueRoom: {fileID: 11400000, guid: e8b79a012090088448aab1362fc32416, type: 2}
+  interObjectsInRoom: []

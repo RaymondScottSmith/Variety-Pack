@@ -28,6 +28,11 @@ public class TextGameController : MonoBehaviour
         DisplayLoggedText();
     }
 
+    public void RemoveFromInventory(string itemToRemove)
+    {
+        interactableItems.RemoveFromInventory(itemToRemove);
+    }
+
     public void DisplayLoggedText()
     {
         string logAsText = string.Join("\n", actionLog.ToArray());
@@ -70,6 +75,14 @@ public class TextGameController : MonoBehaviour
                 {
                     interactableItems.examineDictionary.Add(interactableInRoom.noun, interaction.textResponse);
                 }
+                if (interaction.inputAction.keyWord == "take")
+                {
+                    interactableItems.takeDictionary.Add(interactableInRoom.noun, interaction.textResponse);
+                }
+                if (interaction.inputAction.keyWord == "use")
+                {
+                    interactableItems.useRespDictionary.Add(interactableInRoom.noun, interaction.textResponse);
+                }
             }
         }
     }
@@ -86,6 +99,7 @@ public class TextGameController : MonoBehaviour
 
     void ClearCollectionsForNewRoom()
     {
+        interactableItems.ClearCollections();
         interactionDescriptionsInRoom.Clear();
         roomNavigation.ClearExits();
     }

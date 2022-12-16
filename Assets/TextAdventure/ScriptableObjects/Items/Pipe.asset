@@ -13,4 +13,16 @@ MonoBehaviour:
   m_Name: Pipe
   m_EditorClassIdentifier: 
   noun: pipe
-  description: An extendable modular pipe.
+  description: A pipe lies in the corner.
+  interactions:
+  - inputAction: {fileID: 11400000, guid: f3b9086767e60e74bb6bab07cc2800a4, type: 2}
+    textResponse: An extendable modular pipe. It can connect any two nozzles.
+    actionResponses: []
+  - inputAction: {fileID: 11400000, guid: 1391f8435eb4b974281d9d9e68f17036, type: 2}
+    textResponse: You grab the pipe.
+    actionResponses: []
+  - inputAction: {fileID: 11400000, guid: ea6e0ac9f63b67046825d76807a8f274, type: 2}
+    textResponse: 
+    actionResponses:
+    - {fileID: 11400000, guid: 7b4a8b83774b095449ab3321e203acaa, type: 2}
+    - {fileID: 11400000, guid: 1b7b468da615cd248a3a3333a43e89e3, type: 2}
