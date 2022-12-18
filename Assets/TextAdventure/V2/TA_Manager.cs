@@ -27,6 +27,8 @@ public class TA_Manager : MonoBehaviour
     
     private List<string> actionLog = new List<string>();
 
+    public TA_SoundManager soundManager;
+
     public bool hasCode;
 
     public List<TA_Item> inventory;
@@ -47,7 +49,8 @@ public class TA_Manager : MonoBehaviour
         {
             Destroy(this);
         }
-        
+
+        soundManager = GetComponent<TA_SoundManager>();
         inputField.onEndEdit.AddListener(AcceptStringInput);
     }
 

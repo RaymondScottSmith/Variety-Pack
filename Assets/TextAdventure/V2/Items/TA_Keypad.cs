@@ -17,7 +17,7 @@ public class TA_Keypad : TA_Item
         {
             oneUse = true;
             TA_Manager.Instance.LogStringWithReturn("You enter the code you memorized from the note that kind crewmember left you.");
-
+            TA_Manager.Instance.soundManager.PlayClip(2);
             if (leftKeypad)
             {
                 TA_Manager.Instance.currentRoom.exits[exitToAdd] = extraRoomToAdd;
@@ -28,7 +28,7 @@ public class TA_Keypad : TA_Item
         else
         {
             TA_Manager.Instance.LogStringWithReturn("Unfortunately you don't have the time to try out every number combination. Unless you find the code somewhere, don't bother.");
-            
+            TA_Manager.Instance.soundManager.PlayClip(1);
         }
 
         return true;

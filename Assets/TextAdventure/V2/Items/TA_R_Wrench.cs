@@ -15,6 +15,7 @@ public class TA_R_Wrench : TA_Item
         if (TA_Manager.Instance.currentRoom == useRoom)
         {
             TA_Manager.Instance.LogStringWithReturn("With a few quick turns of the wrench you get the door revolving again.");
+            TA_Manager.Instance.soundManager.PlayClip(5);
             door.isFixed = true;
             useRoom.roomDescriptions[0] = newHallDescription;
             door.examineDescription = newDoorDescription;

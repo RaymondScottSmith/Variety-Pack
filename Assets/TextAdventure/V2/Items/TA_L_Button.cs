@@ -14,6 +14,7 @@ public class TA_L_Button : TA_Item
         if (wheel.currentPressure == 60)
         {
             TA_Manager.Instance.LogStringWithReturn("You hear a whooshing sound as the fire suppression system starts up.");
+            TA_Manager.Instance.soundManager.PlayClip(4);
             TA_Manager.Instance.currentRoom.RemoveItemFromRoom("wheel");
             TA_Manager.Instance.currentRoom.RemoveItemFromRoom("button");
             hall.roomDescriptions[0] = newHallDescription;

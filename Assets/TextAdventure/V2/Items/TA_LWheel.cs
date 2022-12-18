@@ -19,6 +19,7 @@ public class TA_LWheel : TA_Item
             return true;
         }
 
+        TA_Manager.Instance.soundManager.PlayClip(3);
         currentPressure += 30;
         TA_Manager.Instance.LogStringWithReturn("You turn the wheel.");
         if (!displayOn)

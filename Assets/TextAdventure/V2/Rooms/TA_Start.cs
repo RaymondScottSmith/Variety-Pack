@@ -33,7 +33,8 @@ public class TA_Start : TA_Room
                 break;
             default:
                 CantGoThere(direction);
-                break;
+                return;
         }
+        TA_Manager.Instance.soundManager.PlayClip(0,0.5f,1f);
     }
 }

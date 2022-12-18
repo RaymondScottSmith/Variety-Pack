@@ -20,6 +20,7 @@ public class TA_R_Hall2 : TA_Room
                 }
                 else
                 {
+                    TA_Manager.Instance.soundManager.PlayClip(6, 0.9f, 0.5f);
                     TA_Manager.Instance.LogStringWithReturn(failureMessage);
                     if (PlayerPrefs.GetInt("TextLPaper") == 1)
                     {
