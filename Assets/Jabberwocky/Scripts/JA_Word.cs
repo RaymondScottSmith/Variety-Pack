@@ -7,10 +7,13 @@ public class JA_Word
 {
     public string word;
     private int letterIndex;
-    public JA_Word(string myWord)
+    private WordDisplay display;
+    public JA_Word(string myWord, WordDisplay newDisplay)
     {
+        display = newDisplay;
         word = myWord;
         letterIndex = 0;
+        display.SetWord(word);
     }
 
     public char GetNextLetter()
@@ -22,6 +25,7 @@ public class JA_Word
     {
         letterIndex++;
         //Remove letter on screen
+        display.RemoveLetter();
     }
 
     public bool WordComplete()
@@ -30,8 +34,10 @@ public class JA_Word
         if (finished)
         {
             //Remove word on screen
+            display.RemoveWord();
         }
 
         return finished;
     }
+    
 }

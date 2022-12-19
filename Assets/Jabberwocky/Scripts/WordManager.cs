@@ -9,16 +9,17 @@ public class WordManager : MonoBehaviour
     private bool hasActiveWord;
     private JA_Word activeWord;
 
+    public JA_WordSpawner wordSpawner;
+    
+
     private void Start()
     {
-        AddWord();
-        AddWord();
-        AddWord();
+        wordSpawner = GetComponent<JA_WordSpawner>();
     }
 
     public void AddWord()
     {
-        JA_Word word = new JA_Word(JA_WordGenerator.GetRandomWord());
+        JA_Word word = new JA_Word(JA_WordGenerator.GetRandomWord(), wordSpawner.SpawnWord());
         Debug.Log(word.word);
         words.Add(word);
     }
