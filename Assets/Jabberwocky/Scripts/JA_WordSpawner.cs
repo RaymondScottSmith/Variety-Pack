@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class JA_WordSpawner : MonoBehaviour
 {
-    public GameObject wordPrefab;
+    public List<GameObject> wordPrefabs;
     [SerializeField] private Transform wordCanvas;
-    [SerializeField] private Transform groundSpawn;
+    [SerializeField] private Transform topSpawn;
+    [SerializeField] private Transform bottomSpawn;
     public WordDisplay SpawnWord()
     {
-        //Vector3 randomPosition = new Vector3(Random.Range(130f, 820f), 700f);
-        GameObject wordObj = Instantiate(wordPrefab, groundSpawn.position, Quaternion.identity, wordCanvas);
-
+        Vector3 randomPosition = new Vector3(topSpawn.position.x, Random.Range(bottomSpawn.position.y, topSpawn.position.y));
+        GameObject wordObj = Instantiate(wordPrefabs[Random.Range(0, wordPrefabs.Count)], randomPosition, Quaternion.identity, wordCanvas);
+        wordObj.transform.SetAsFirstSibling();
         WordDisplay wordDisplay = wordObj.GetComponent<WordDisplay>();
         return wordDisplay;
     }

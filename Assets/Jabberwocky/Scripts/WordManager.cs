@@ -10,8 +10,24 @@ public class WordManager : MonoBehaviour
     private JA_Word activeWord;
 
     public JA_WordSpawner wordSpawner;
-    
 
+    public GameObject hero;
+    public Animator heroAnimator;
+
+    public static WordManager Instance;
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(Instance);
+        }
+    }
     private void Start()
     {
         wordSpawner = GetComponent<JA_WordSpawner>();
@@ -54,6 +70,12 @@ public class WordManager : MonoBehaviour
             hasActiveWord = false;
             words.Remove(activeWord);
         }
+    }
+
+    public void SlashCreature(Vector2 pos, Animator animator)
+    {
+        hero.transform.position = new Vector2(hero.transform.position.x, pos.y);
+        heroAnimator.SetTrigger("Attack");
     }
     
 }

@@ -7,10 +7,12 @@ public class WordDisplay : MonoBehaviour
 {
     public TMP_Text text;
 
-    [SerializeField] private float fallSpeed = 1f;
+    [SerializeField] private float moveSpeed = 1f;
+    private bool moving;
     public void SetWord(string word)
     {
         text.text = word;
+        moving = true;
     }
 
     public void RemoveLetter()
@@ -22,12 +24,24 @@ public class WordDisplay : MonoBehaviour
 
     public void RemoveWord()
     {
+        WordManager.Instance.SlashCreature(transform.position,null);
+        moving = false;
+        StartCoroutine(StopAndDie());
+    }
+
+    private IEnumerator StopAndDie()
+    {
+        yield return new WaitForSeconds(.2f);
         Destroy(gameObject);
     }
 
     private void FixedUpdate()
     {
-        Vector3 newPosition = transform.position + Vector3.left * fallSpeed;
-        transform.position = newPosition;
+        if (moving)
+        {
+            Vector3 newPosition = transform.position + Vector3.left * moveSpeed;
+            transform.position = newPosition;
+        }
+        
     }
 }
