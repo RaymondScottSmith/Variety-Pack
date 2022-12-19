@@ -10,7 +10,7 @@ public class WordManager : MonoBehaviour
     private void Start()
     {
         AddWord();
-        AddWard();
+        AddWord();
         AddWord();
     }
 
