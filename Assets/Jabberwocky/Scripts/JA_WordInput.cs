@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class JA_WordInput : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public WordManager wordManager;
+
     void Start()
     {
-        
+        wordManager = FindObjectOfType<WordManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        foreach (char letter in Input.inputString)
+        {
+            wordManager.TypeLetter(letter);
+        }
     }
 }
