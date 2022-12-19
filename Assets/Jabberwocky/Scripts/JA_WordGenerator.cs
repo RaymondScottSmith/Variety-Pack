@@ -4,19 +4,32 @@ using UnityEngine;
 
 public class JA_WordGenerator : MonoBehaviour
 {
+    public static JA_WordGenerator Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+    private static string[] wordList = { };
     private void Start()
     {
         TextAsset wordFile = Resources.Load<TextAsset>("JA_WordList");
 
-        string[] data = wordFile.text.Split(new char[] { ',' });
-        foreach (string word in data)
-        {
-            Debug.Log(word);
-        }
+        wordList = wordFile.text.Split(new char[] { ',' });
     }
-    private static string[] wordList = { };
+    
     public static string GetRandomWord()
     {
-        return null;
+        int randomIndex = Random.Range(0, wordList.Length);
+        string randomWord = wordList[randomIndex];
+
+        return randomWord;
     }
 }
