@@ -13,7 +13,7 @@ public class JA_Word
         display = newDisplay;
         word = myWord;
         letterIndex = 0;
-        display.SetWord(word);
+        display.SetWord(word, this);
     }
 
     public char GetNextLetter()

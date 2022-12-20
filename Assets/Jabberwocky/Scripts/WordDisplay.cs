@@ -9,10 +9,16 @@ public class WordDisplay : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 1f;
     private bool moving;
-    public void SetWord(string word)
+
+    private Animator animator;
+
+    public JA_Word myWord;
+    public void SetWord(string word, JA_Word jaWord)
     {
         text.text = word;
         moving = true;
+        animator = GetComponent<Animator>();
+        myWord = jaWord;
     }
 
     public void RemoveLetter()
@@ -31,7 +37,20 @@ public class WordDisplay : MonoBehaviour
 
     private IEnumerator StopAndDie()
     {
-        yield return new WaitForSeconds(.2f);
+        Jabberwock jab = GetComponent<Jabberwock>();
+        if (jab != null)
+        {
+            jab.JabberDefeated();
+        }
+        else
+        {
+            yield return new WaitForSeconds(.2f);
+            animator.SetTrigger("Die");
+        }
+    }
+
+    public void KillCreature()
+    {
         Destroy(gameObject);
     }
 
@@ -41,6 +60,12 @@ public class WordDisplay : MonoBehaviour
         {
             Vector3 newPosition = transform.position + Vector3.left * moveSpeed;
             transform.position = newPosition;
+            if (transform.position.x <= WordManager.Instance.hero.transform.position.x)
+            {
+                WordManager.Instance.RemoveWord(myWord);
+                WordManager.Instance.LoseGame();
+                KillCreature();
+            }
         }
         
     }

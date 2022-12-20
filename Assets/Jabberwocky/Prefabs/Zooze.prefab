@@ -299,6 +299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6340435829636097120}
   - component: {fileID: 6340435829636097127}
+  - component: {fileID: 2879030157187173511}
   m_Layer: 5
   m_Name: Zooze
   m_TagString: Untagged
@@ -342,6 +343,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 6340435829023287893}
   moveSpeed: 3
+--- !u!95 &2879030157187173511
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6340435829636097121}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 54ac4b46d1a327345a39bb049bb5ce9e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6340435829984033046
 GameObject:
   m_ObjectHideFlags: 0
