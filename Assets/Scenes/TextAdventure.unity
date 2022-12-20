@@ -571,12 +571,15 @@ MonoBehaviour:
     To the west is a door marked
     BATHROOM.
 
-    To the north is a revolving door, stuck in place.'
+    To the north is a revolving door, stuck in place.
+
+    To the
+    south is a door leading to a small storage room.'
   roomDescriptions: []
   westExitDesc: You head through the west door.
   eastExitDesc: 
   northExitDesc: You easily move through the now functioning door.
-  southExitDesc: You head through the west door.
+  southExitDesc: You head through the south door.
   doorOpened: 0
 --- !u!4 &191399185
 Transform:
@@ -707,6 +710,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a5ccf3d806f844fb684e06c18d3659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  helpResponse: 'Try to phrase your actions in a simple form.
+
+    Go East -> Good
+
+    Stride
+    in an easterly direction -> Bad
+
+    If you can''t remember where you are or
+    what to do try "Look Around"
+
+    Type "Restart" to restart the game.
+
+    Type
+    "Menu" to return to the menu.
+
+    Type "Inventory" to check your inventory.
+
+    Always
+    remember the golden 4 commands:
+
+    Examine
+
+    Use
+
+    Take
+
+    Go
+
+
+    Ps:
+    It may not be possible to win the game "this" time.'
   resetProgress: 0
   observerRoom: {fileID: 1656049416}
   lineupRoom: {fileID: 228267795}
@@ -733,6 +767,7 @@ MonoBehaviour:
   - use
   - restart
   - menu
+  - help
   soundManager: {fileID: 0}
   hasCode: 0
   inventory: []
@@ -3385,7 +3420,10 @@ MonoBehaviour:
     To the east is a door marked FIRE SUPPRESSION.
 
     To the
-    north is a raging fire blocking the rest of the hallway.'
+    north is a raging fire blocking the rest of the hallway.
+
+    To the south is
+    a door leading to an office.'
   roomDescriptions: []
   westExitDesc: You head west towards LOST AND FOUND.
   eastExitDesc: You head east towards FIRE SUPPRESSION

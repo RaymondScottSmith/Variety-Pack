@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class TA_Manager : MonoBehaviour
 {
+    [Header("Help Response")] [TextArea] public string helpResponse;
     [Header("ResetButton")] public bool resetProgress;
     public TA_Observ observerRoom;
     public TA_LineUp lineupRoom;
@@ -103,39 +104,60 @@ public class TA_Manager : MonoBehaviour
         if (CheckActionValidity(separatedInputWords[0]))
         {
 
-            switch (separatedInputWords[0])
+            if (separatedInputWords.Length > 1)
             {
-                case "go":
-                    HandleGoCommand(separatedInputWords[1]);
-                    break;
-                case "look":
-                    HandleLookCommand(separatedInputWords[1]);
-                    break;
-                case "examine":
-                    HandleLookCommand(separatedInputWords[1]);
-                    break;
-                case "take":
-                    HandleTakeCommand(separatedInputWords[1]);
-                    break;
-                case "grab":
-                    HandleTakeCommand(separatedInputWords[1]);
-                    break;
-                case "inventory":
-                    ListInventory();
-                    break;
-                case "use":
-                    HandleUseCommand(separatedInputWords[1]);
-                    break;
-                case "restart":
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                    break;
-                case "menu":
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                    break;
-                default:
-                    LogStringWithReturn("I don't recognize " + separatedInputWords[0] + ".");
-                    break;
+                switch (separatedInputWords[0])
+                {
+                    case "go":
+                        HandleGoCommand(separatedInputWords[1]);
+                        break;
+                    case "look":
+                        HandleLookCommand(separatedInputWords[1]);
+                        break;
+                    case "examine":
+                        HandleLookCommand(separatedInputWords[1]);
+                        break;
+                    case "take":
+                        HandleTakeCommand(separatedInputWords[1]);
+                        break;
+                    case "grab":
+                        HandleTakeCommand(separatedInputWords[1]);
+                        break;
+                    case "use":
+                        HandleUseCommand(separatedInputWords[1]);
+                        break;
+                    case "help":
+                        HandleHelpRequest(separatedInputWords[1]);
+                        break;
+                    default:
+                        LogStringWithReturn("I don't recognize " + separatedInputWords[0] + ".");
+                        break;
+                }
+                
             }
+            else
+            {
+                switch (separatedInputWords[0])
+                {
+                    case "restart":
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                        break;
+                    case "menu":
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                        break;
+                    case "help":
+                        HandleHelpRequest();
+                        break;
+                    case "inventory":
+                        ListInventory();
+                        break;
+                    default:
+                        LogStringWithReturn("You want to " + separatedInputWords[0] + " what?");
+                        break;
+                }
+                
+            }
+            
             
         }
         else
@@ -144,6 +166,11 @@ public class TA_Manager : MonoBehaviour
         }
 
         InputComplete();
+    }
+
+    private void HandleHelpRequest(string separatedInputWord = null)
+    {
+        LogStringWithReturn(helpResponse);
     }
 
     public void HandleUseCommand(string whatToUse)
