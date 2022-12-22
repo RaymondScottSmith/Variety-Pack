@@ -4,22 +4,38 @@ using UnityEngine;
 
 public class FallSpawner : MonoBehaviour
 {
+    public static FallSpawner Instance;
     [SerializeField] private GameObject fallPrefab;
 
     [SerializeField] private Transform leftMax, rightMax;
 
-    private Vector3 left, right;
+    public Vector3 left, right;
 
     public float spawnRate = 0.5f;
 
     public int maxPerSpawn = 1;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+        left = leftMax.position;
+        right = rightMax.position;
+    }
+    
+    
     // Start is called before the first frame update
     void Start()
     {
-        left = leftMax.position;
-        right = rightMax.position;
         
-        InvokeRepeating("StartSpawning", 0, spawnRate);
+        
+        //InvokeRepeating("StartSpawning", 0, spawnRate);
     }
 
     private void StartSpawning()
@@ -38,7 +54,7 @@ public class FallSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnFaller()
+    public void SpawnFaller()
     {
         float xRand = Random.Range(left.x, right.x);
         Vector3 spawnPoint = new Vector3(xRand, left.y, 0);

@@ -7,7 +7,7 @@ public class FallingBullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("DestroyMe",3f);
+        Invoke("DestroyMe",3.5f);
     }
 
     public void DestroyMe()

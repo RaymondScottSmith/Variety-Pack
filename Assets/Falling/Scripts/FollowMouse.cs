@@ -15,6 +15,10 @@ public class FollowMouse : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!FallGameManager.Instance.isRunning)
+        {
+            return;
+        }
         Vector3 screenPoint = Input.mousePosition;
         screenPoint.z = 10;
         Vector3 worldPoint = Camera.main.ScreenToWorldPoint(screenPoint) ;
