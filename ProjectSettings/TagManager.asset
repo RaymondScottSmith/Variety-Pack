@@ -8,6 +8,8 @@ TagManager:
   - Ball
   - Wall
   - Note
+  - Floor
+  - Enemy
   layers:
   - Default
   - TransparentFX

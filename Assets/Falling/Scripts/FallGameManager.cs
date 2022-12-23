@@ -43,6 +43,7 @@ public class FallGameManager : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = false;
         isRunning = true;
         endPanel.SetActive(false);
         myAudio = GetComponent<AudioSource>();
@@ -89,7 +90,7 @@ public class FallGameManager : MonoBehaviour
         if (time > 15)
             if (fallingRobots < maxFallingRobots && totalRobots > 0)
             {
-                Debug.Log("Making more robots");
+                //Debug.Log("Making more robots");
                 FallSpawner.Instance.SpawnFaller();
                 totalRobots--;
                 fallingRobots++;
@@ -115,7 +116,7 @@ public class FallGameManager : MonoBehaviour
             FallSpawner.Instance.SpawnFaller();
             yield return new WaitForSeconds(timeToSpawn / totalRobots);
         }
-        Debug.Log("Finished Spawning");
+        //Debug.Log("Finished Spawning");
     }
 
     public void RobotLanded()
@@ -145,7 +146,7 @@ public class FallGameManager : MonoBehaviour
             CancelInvoke("IncrementTime");
             CancelInvoke("SpawnEveryInterval");
             StartCoroutine(EndGameSequence());
-            Debug.Log("Run ends here");
+            //Debug.Log("Run ends here");
         }
     }
 
@@ -157,6 +158,7 @@ public class FallGameManager : MonoBehaviour
     private IEnumerator EndGameSequence()
     {
         yield return new WaitForSeconds(2f);
+        Cursor.visible = true;
         isRunning = false;
         endPanel.SetActive(true);
         scoreText.text = time.ToString();
