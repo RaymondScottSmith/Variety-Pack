@@ -37,6 +37,7 @@ public class H_Zombie : MonoBehaviour
     private SphereCollider detector;
     private Animator animator;
     private AudioSource audioSource;
+    private Outline myOutline;
     
     //AI
     private bool detectPlayer;
@@ -51,6 +52,7 @@ public class H_Zombie : MonoBehaviour
         detector = GetComponent<SphereCollider>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        myOutline = GetComponent<Outline>();
         health = maxHealth;
 
     }
@@ -72,7 +74,7 @@ public class H_Zombie : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        
+        //StartCoroutine(FlashOutline(0.5f));
         if (!playerInRange)
             playerInRange = true;
         animator.SetTrigger("Hurt");
@@ -90,6 +92,13 @@ public class H_Zombie : MonoBehaviour
             zombieNav.velocity = Vector3.zero;
             zombieNav.isStopped = true;
         }
+    }
+
+    public IEnumerator FlashOutline(float duration)
+    {
+        myOutline.OutlineWidth = 1f;
+        yield return new WaitForSeconds(duration);
+        myOutline.OutlineWidth = 0f;
     }
 
     public void ResumeMoving()
@@ -216,6 +225,7 @@ public class H_Zombie : MonoBehaviour
         }
     }
 
+    /*
     void OnTriggerExit(Collider col)
     {
         if (col.gameObject.CompareTag("Player"))
@@ -224,5 +234,6 @@ public class H_Zombie : MonoBehaviour
             PlayerInRange(false);
         }
     }
+    */
     
 }

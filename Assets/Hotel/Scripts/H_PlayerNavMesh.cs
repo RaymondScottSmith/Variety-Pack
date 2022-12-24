@@ -102,6 +102,7 @@ public class H_PlayerNavMesh : MonoBehaviour
                             //Debug.Log(gunHit.collider.tag);
                             if (gunHit.collider.CompareTag("Enemy"))
                             {
+                                StartCoroutine(gunHit.collider.GetComponentInParent<H_Zombie>().FlashOutline(0.5f));
                                 animator.SetTrigger("ShootPistol");
                                 StartCoroutine(DamageEnemy(gunHit.collider.gameObject.GetComponentInParent<H_Zombie>(), pistolDamage, pistolDelay));
                             }
