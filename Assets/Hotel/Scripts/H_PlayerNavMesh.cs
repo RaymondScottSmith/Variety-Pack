@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
@@ -7,12 +8,19 @@ using UnityEngine.Animations.Rigging;
 public class H_PlayerNavMesh : MonoBehaviour
 {
 
+    [Header("Player Stats")] [SerializeField]
+    private int maxHealth = 100;
+
+    private int health;
+    
     [SerializeField] private GameObject moveTarget;
     private NavMeshAgent navMeshAgent;
     private Camera cam;
     private Animator animator;
     private AudioSource myAudio;
     private bool shooting;
+    private bool isDead;
+    private CapsuleCollider capCollider;
     
     [SerializeField]
     private Transform raycastPoint;
@@ -21,12 +29,20 @@ public class H_PlayerNavMesh : MonoBehaviour
 
     [Header("Firearm Delays")] [SerializeField] private float pistolDelay = 1f;
 
+    [Header("Firearm Damage")] [SerializeField]
+    private int pistolDamage = 40;
+
     [Header("Firearm Animators")] [SerializeField]
     private Animator pistolAnim;
 
     [Header("Firearm Sounds")] [SerializeField]
     private AudioClip pistolSound;
-    
+
+
+    [SerializeField]
+    private AudioClip[] painSounds;
+
+    [SerializeField] private AudioClip deathSound;
     // Start is called before the first frame update
     void Awake()
     {
@@ -34,16 +50,28 @@ public class H_PlayerNavMesh : MonoBehaviour
         cam = Camera.main;
         animator = GetComponent<Animator>();
         myAudio = GetComponent<AudioSource>();
+        capCollider = GetComponent<CapsuleCollider>();
+        health = maxHealth;
+        isDead = false;
     }
 
     void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
         if (Input.GetMouseButtonUp(0)) 
         { 
+            int mouseMask = 1 << 12;
+
+            // This would cast rays only against colliders in layer 12.
+            // But instead we want to collide against everything except layer 12. The ~ operator does this, it inverts a bitmask.
+            mouseMask = ~mouseMask;
             //a ray from the near plane of the camera to the NavMesh
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             //if the ray hits any object that has NavMesh, Set agent Destination to that point
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if (Physics.Raycast(ray, out RaycastHit hit,1000, mouseMask))
             {
                 switch (hit.collider.tag)
                 {
@@ -59,8 +87,7 @@ public class H_PlayerNavMesh : MonoBehaviour
                     case "Enemy":
                         navMeshAgent.velocity = Vector3.zero;
                         navMeshAgent.isStopped = true;
-                        transform.LookAt(hit.collider.transform);
-                        transform.Rotate(0f,-20f,0f);
+                        
                         RaycastHit gunHit;
                         
                         // Bit shift the index of the layer (7) to get a bit mask
@@ -70,11 +97,15 @@ public class H_PlayerNavMesh : MonoBehaviour
                         // But instead we want to collide against everything except layer 7. The ~ operator does this, it inverts a bitmask.
                         layerMask = ~layerMask;
                         if (Physics.Raycast(raycastPoint.position,   hit.collider.transform.position - raycastPoint.position,
-                                out gunHit, 1000f, layerMask))
+                                out gunHit, 1000f, layerMask) && !shooting)
                         {
-                            Debug.Log(gunHit.collider.tag);
+                            //Debug.Log(gunHit.collider.tag);
                             if (gunHit.collider.CompareTag("Enemy"))
+                            {
                                 animator.SetTrigger("ShootPistol");
+                                StartCoroutine(DamageEnemy(gunHit.collider.gameObject.GetComponentInParent<H_Zombie>(), pistolDamage, pistolDelay));
+                            }
+                                
                             shooting = true;
                             StartCoroutine(DelayForFirearms(pistolDelay, hit.collider.transform));
                         }
@@ -91,12 +122,65 @@ public class H_PlayerNavMesh : MonoBehaviour
 
     private IEnumerator DelayForFirearms(float delay, Transform nowLook = null)
     {
-        yield return new WaitForSeconds(delay);
-        shooting = false;
         if (nowLook != null)
         {
-            transform.LookAt(nowLook);
+            Vector3 temp = nowLook.position - raycastPoint.position;
+            Quaternion tempQuat = Quaternion.LookRotation(temp, Vector3.up);
+        
+            if (!CompareFloats(tempQuat.eulerAngles.y - 20f, transform.rotation.eulerAngles.y, 1f))
+            {
+                transform.LookAt(nowLook);
+                transform.Rotate(0f,-20f,0f);
+            }
         }
+        
+        yield return new WaitForSeconds(delay);
+        
+        shooting = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (isDead)
+            return;
+        myAudio.pitch = 1.35f;
+        myAudio.PlayOneShot(painSounds[Random.Range(0,painSounds.Length)]);
+        animator.SetTrigger("GetHit");
+        health -= damage;
+        if (health < 0)
+        {
+            health = 0;
+        }
+
+        if (health == 0)
+        {
+            isDead = true;
+            Debug.Log("Health is at zero.");
+            Debug.Log("End game here.");
+            capCollider.enabled = false;
+            navMeshAgent.velocity = Vector3.zero;
+            navMeshAgent.isStopped = true;
+            GetComponent<Rigidbody>().freezeRotation = true;
+        }
+        animator.SetBool("Dead", isDead);
+    }
+
+    public void PlayDeathSound()
+    {
+        myAudio.pitch = 1.35f;
+        myAudio.PlayOneShot(deathSound);
+    }
+
+    private IEnumerator DamageEnemy(H_Zombie zombie, int damageValue, float delay)
+    {
+        yield return new WaitForSeconds(delay / 2f);
+        zombie.TakeDamage(damageValue);
+        yield return new WaitForFixedUpdate();
+    }
+
+    private bool CompareFloats(float value1, float value2, float margin = 0.01f)
+    {
+        return Mathf.Abs(value1 - value2) <= margin;
     }
 
     private IEnumerator FlashTarget(Vector3 position)
@@ -109,7 +193,7 @@ public class H_PlayerNavMesh : MonoBehaviour
 
     public void ShootPistol()
     {
-        Debug.Log("Pistol Sound Here");
+        myAudio.pitch = 1f;
         myAudio.PlayOneShot(pistolSound);
         pistolAnim.SetTrigger("Fire");
     }

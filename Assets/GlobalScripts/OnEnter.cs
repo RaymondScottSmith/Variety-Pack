@@ -8,7 +8,7 @@ public class OnEnter : MonoBehaviour
 {
     [SerializeField] private string enterTag;
 
-    public UnityEvent OnEnterEvent;
+    public UnityEvent OnEnterEvent, OnExitEvent;
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag(enterTag))
@@ -22,6 +22,22 @@ public class OnEnter : MonoBehaviour
         if (col.gameObject.CompareTag(enterTag))
         {
             OnEnterEvent?.Invoke();
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.CompareTag(enterTag))
+        {
+            OnExitEvent?.Invoke();
+        }
+    }
+    
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag(enterTag))
+        {
+            OnExitEvent?.Invoke();
         }
     }
 }
