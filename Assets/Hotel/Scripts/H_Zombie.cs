@@ -72,11 +72,15 @@ public class H_Zombie : MonoBehaviour
         playerInRange = isPlayer;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, GameObject attacker)
     {
         //StartCoroutine(FlashOutline(0.5f));
         if (!playerInRange)
+        {
             playerInRange = true;
+            player = attacker;
+        }
+            
         animator.SetTrigger("Hurt");
         health -= damage;
         
@@ -122,9 +126,13 @@ public class H_Zombie : MonoBehaviour
         }
         if (playerInRange)
         {
+            int layerMask = 1 << 8;
+            int layerMask2 = 1 << 12;
+            layerMask = layerMask | layerMask2;
+            layerMask = ~layerMask;
             RaycastHit hit;
             if (Physics.Raycast(raycastPoint.position,   player.transform.position - raycastPoint.position,
-                    out hit, 1000f))
+                    out hit, Mathf.Infinity, layerMask))
             {
                 //Debug.Log(hit.collider.tag);
                 if (hit.collider.CompareTag("Player"))
@@ -165,6 +173,7 @@ public class H_Zombie : MonoBehaviour
 
     public void RemoveSequence()
     {
+        H_GameManager.Instance.DeadZombie();
         Invoke("Remove", disappearTime);
     }
 

@@ -11,6 +11,7 @@ TagManager:
   - Floor
   - Enemy
   - Door
+  - Interact
   layers:
   - Default
   - TransparentFX

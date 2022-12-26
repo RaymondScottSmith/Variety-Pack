@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.UI;
 
 public class H_PlayerNavMesh : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class H_PlayerNavMesh : MonoBehaviour
     private int health;
     
     [SerializeField] private GameObject moveTarget;
+    [SerializeField] private Slider healthBar;
     private NavMeshAgent navMeshAgent;
     private Camera cam;
     private Animator animator;
@@ -21,6 +23,7 @@ public class H_PlayerNavMesh : MonoBehaviour
     private bool shooting;
     private bool isDead;
     private CapsuleCollider capCollider;
+    private H_Interactive selectedInteractable;
     
     [SerializeField]
     private Transform raycastPoint;
@@ -57,6 +60,11 @@ public class H_PlayerNavMesh : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+        healthBar.value = (float)health/(float)(maxHealth);
         if (isDead)
         {
             return;
@@ -73,6 +81,11 @@ public class H_PlayerNavMesh : MonoBehaviour
             //if the ray hits any object that has NavMesh, Set agent Destination to that point
             if (Physics.Raycast(ray, out RaycastHit hit,1000, mouseMask))
             {
+                //Debug.Log(hit.collider.gameObject.tag);
+                if (selectedInteractable != null)
+                {
+                    selectedInteractable.CancelSelect();
+                }
                 switch (hit.collider.tag)
                 {
                     case "Floor":
@@ -91,14 +104,16 @@ public class H_PlayerNavMesh : MonoBehaviour
                         RaycastHit gunHit;
                         
                         // Bit shift the index of the layer (7) to get a bit mask
-                        int layerMask = 1 << 7;
-
+                        int layerMask = 1 << 8;
+                        int layerMask2 = 1 << 12;
+                        layerMask = layerMask | layerMask2;
                         // This would cast rays only against colliders in layer 7.
                         // But instead we want to collide against everything except layer 7. The ~ operator does this, it inverts a bitmask.
                         layerMask = ~layerMask;
                         if (Physics.Raycast(raycastPoint.position,   hit.collider.transform.position - raycastPoint.position,
                                 out gunHit, 1000f, layerMask) && !shooting)
                         {
+                            Debug.Log(gunHit.collider.tag);
                             //Debug.Log(gunHit.collider.tag);
                             if (gunHit.collider.CompareTag("Enemy"))
                             {
@@ -110,6 +125,11 @@ public class H_PlayerNavMesh : MonoBehaviour
                             shooting = true;
                             StartCoroutine(DelayForFirearms(pistolDelay, hit.collider.transform));
                         }
+                        break;
+                    
+                    case "Interact":
+                        selectedInteractable = hit.collider.GetComponent<H_Interactive>();
+                        selectedInteractable.MoveToInteract(this.gameObject);
                         break;
                     default:
                         break;
@@ -156,8 +176,6 @@ public class H_PlayerNavMesh : MonoBehaviour
         if (health == 0)
         {
             isDead = true;
-            Debug.Log("Health is at zero.");
-            Debug.Log("End game here.");
             capCollider.enabled = false;
             navMeshAgent.velocity = Vector3.zero;
             navMeshAgent.isStopped = true;
@@ -172,10 +190,15 @@ public class H_PlayerNavMesh : MonoBehaviour
         myAudio.PlayOneShot(deathSound);
     }
 
+    public void LoseGame()
+    {
+        H_GameManager.Instance.LoseGame();
+    }
+
     private IEnumerator DamageEnemy(H_Zombie zombie, int damageValue, float delay)
     {
         yield return new WaitForSeconds(delay / 2f);
-        zombie.TakeDamage(damageValue);
+        zombie.TakeDamage(damageValue, this.gameObject);
         yield return new WaitForFixedUpdate();
     }
 
