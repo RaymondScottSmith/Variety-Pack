@@ -11,7 +11,8 @@ TagManager:
   - Floor
   - Enemy
   - Door
-  - Interact
+  - Hold
+  - Surface
   layers:
   - Default
   - TransparentFX
@@ -27,8 +28,8 @@ TagManager:
   - IgnoreEverythingExcept12
   - 12
   - Ignore12
-  - 
-  - 
+  - Ground
+  - Interact
   - 
   - 
   - 
