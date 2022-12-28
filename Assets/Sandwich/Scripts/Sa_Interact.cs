@@ -14,16 +14,26 @@ public class Sa_Interact : MonoBehaviour
     public bool carrying;
 
     public GameObject carried;
+
+    private AudioSource myAudio;
+    [Header("Audio Clips")]
+    public AudioClip dishDropSound, plopSound, pickupSound, trashSound;
+
+    public GameObject arm;
     // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
+        myAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        HandleClicks();
+        arm.SetActive(carrying);
+        
+        if (!SandwichManager.Instance.checkingMenu)
+            HandleClicks();
     }
 
     private void HandleClicks()
@@ -55,6 +65,16 @@ public class Sa_Interact : MonoBehaviour
                             PickUpObject(hit.collider.GetComponentInParent<Dispensor>().TakeItem());
                         }
 
+                        break;
+                    
+                    case "Jumpable":
+                        if (carrying && carried != null)
+                        {
+                            myAudio.PlayOneShot(trashSound);
+                            Destroy(carried.gameObject);
+                            carried = null;
+                            carrying = false;
+                        }
                         break;
                     case "Note":
                         if (carrying && carried.GetComponent<Sa_Ingredient>() != null)
@@ -97,8 +117,22 @@ public class Sa_Interact : MonoBehaviour
         }
     }
 
+    private void PlayDropSound(Sa_Ingredient ing)
+    {
+        switch (ing.ingType)
+        {
+            case Sa_Ingredient.Ingredient.Dish:
+                myAudio.PlayOneShot(dishDropSound);
+                break;
+            default:
+                myAudio.PlayOneShot(plopSound);
+                break;
+        }
+    }
+
     void PickUpObject(GameObject pickup)
     {
+        myAudio.PlayOneShot(pickupSound);
         Vector3 pickupScale = pickup.transform.lossyScale;
         pickup.transform.SetParent(null);
         pickup.transform.localScale = pickupScale;
@@ -124,6 +158,7 @@ public class Sa_Interact : MonoBehaviour
 
     void SetDownObject(RaycastHit hit, GameObject heldObject)
     {
+        PlayDropSound(heldObject.GetComponent<Sa_Ingredient>());
         Vector3 pickupScale = heldObject.transform.lossyScale;
         heldObject.transform.SetParent(null);
         heldObject.transform.localScale = pickupScale;

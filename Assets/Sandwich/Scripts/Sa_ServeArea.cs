@@ -5,17 +5,28 @@ using UnityEngine;
 public class Sa_ServeArea : MonoBehaviour
 {
     private List<Sa_Ingredient> ingToServe;
+    public float victoryTime = 1.5f;
 
     public List<Sa_Ingredient.Ingredient> orderedSand;
 
     private bool m_Started;
 
     public LayerMask m_LayerMask;
+
+    [Header("Audio Clips")] 
+    [SerializeField]
+    private AudioClip goodSandwich;
+
+    private Animator animator;
+    private AudioSource myAudio;
+    
     // Start is called before the first frame update
     void Start()
     {
         ingToServe = new List<Sa_Ingredient>();
         m_Started = true;
+        animator = GetComponent<Animator>();
+        myAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,9 +38,41 @@ public class Sa_ServeArea : MonoBehaviour
     void FixedUpdate()
     {
         //Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position + Vector3.up/4, Vector3.one/2f, Quaternion.identity, m_LayerMask);
-        if (CheckForSandwich())
+        if (CheckForSandwich() && orderedSand.Count != 0)
         {
-            Debug.Log("Sandwich Is Correct");
+            orderedSand.Clear();
+            StartCoroutine(Success());
+            
+        }
+    }
+
+    private IEnumerator Success()
+    {
+        myAudio.PlayOneShot(goodSandwich);
+        animator.SetTrigger("Flash");
+        Sa_Ingredient[] ingsOnSquare = GetComponentsInChildren<Sa_Ingredient>();
+        foreach (Sa_Ingredient ing in ingsOnSquare)
+        {
+            ing.gameObject.tag = "Player";
+        }
+        yield return new WaitForSeconds(victoryTime);
+        
+        foreach (Sa_Ingredient ing in ingsOnSquare)
+        {
+            Destroy(ing.gameObject);
+        }
+            
+        SandwichManager.Instance.SandwichCompleted();
+    }
+
+    public void SetNewSandwich(Sandwich newSand)
+    {
+        if (orderedSand.Count == 0)
+        {
+            foreach (Sa_Ingredient.Ingredient ing in newSand.ingredients)
+            {
+                orderedSand.Add(ing);
+            }
         }
     }
 

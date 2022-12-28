@@ -16,6 +16,9 @@ public class Sa_Ingredient : MonoBehaviour
         S_Cheese,
         Dish,
         Tomato,
+        Lettuce,
+        Bacon,
+        Ham,
         Default
     }
 }

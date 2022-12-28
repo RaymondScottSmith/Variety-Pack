@@ -10,6 +10,9 @@ public class Sa_Toaster : MonoBehaviour
     public ToasterState toasterState;
 
     public GameObject toastPrefab;
+
+    public AudioClip pushSound, popSound;
+    private AudioSource myAudio;
     
     
     // Start is called before the first frame update
@@ -17,6 +20,7 @@ public class Sa_Toaster : MonoBehaviour
     {
         myAnimator = GetComponent<Animator>();
         toasterState = ToasterState.Empty;
+        myAudio = GetComponent<AudioSource>();
     }
 
     public void LoadToast()
@@ -28,9 +32,11 @@ public class Sa_Toaster : MonoBehaviour
 
     private IEnumerator ToastBread()
     {
+        myAudio.PlayOneShot(pushSound);
         toasterState = ToasterState.Cooking;
         myAnimator.SetTrigger("Load");
         yield return new WaitForSeconds(toastTime);
+        myAudio.PlayOneShot(popSound);
         toasterState = ToasterState.Done;
         myAnimator.SetTrigger("Done");
     }

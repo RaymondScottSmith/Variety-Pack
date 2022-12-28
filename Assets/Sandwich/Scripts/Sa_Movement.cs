@@ -20,6 +20,8 @@ public class Sa_Movement : MonoBehaviour
     private Vector3 moveDirection;
 
     private Rigidbody rb;
+
+    public bool checkingMenu;
     
     // Start is called before the first frame update
     void Start()
@@ -55,12 +57,15 @@ public class Sa_Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        MovePlayer();
+        if (!SandwichManager.Instance.checkingMenu)
+            MovePlayer();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (SandwichManager.Instance.checkingMenu)
+            return;
         //ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         MyInput();
