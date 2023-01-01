@@ -6,20 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Sandwich.unity
-    guid: b1129597b77067144800d50cc08ffa95
+    path: Assets/Scenes/MainMenu.unity
+    guid: 19e36641bc1ebda489b6a38039bcc1c3
   - enabled: 1
     path: Assets/Scenes/Bureaucracy.unity
     guid: 9854c3d068439be4ba2d857314e60583
-  - enabled: 1
-    path: Assets/Scenes/Falling.unity
-    guid: 4e7d0835501c5954885313b50e5373f8
-  - enabled: 1
-    path: Assets/Scenes/Hotel.unity
-    guid: 607805435c57ed1428f2917f588332cf
-  - enabled: 1
-    path: Assets/Scenes/Jabberwocky.unity
-    guid: 920d987c7d963ba4085b3f1fdc6c82f7
   - enabled: 1
     path: Assets/Scenes/Platformer.unity
     guid: 3dc7856f76011ee41ba2385be478b769
@@ -32,4 +23,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tiger.unity
     guid: 45332acf9bea581478470f236a8192a3
+  - enabled: 1
+    path: Assets/Scenes/Sandwich.unity
+    guid: b1129597b77067144800d50cc08ffa95
+  - enabled: 1
+    path: Assets/Scenes/Falling.unity
+    guid: 4e7d0835501c5954885313b50e5373f8
+  - enabled: 1
+    path: Assets/Scenes/Hotel.unity
+    guid: 607805435c57ed1428f2917f588332cf
+  - enabled: 1
+    path: Assets/Scenes/Jabberwocky.unity
+    guid: 920d987c7d963ba4085b3f1fdc6c82f7
+  - enabled: 1
+    path: Assets/Scenes/Runner.unity
+    guid: 08a3a061bd6be724bb4e3c69127dec83
   m_configObjects: {}

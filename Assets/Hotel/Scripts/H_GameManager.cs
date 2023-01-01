@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +14,7 @@ public class H_GameManager : MonoBehaviour
     [SerializeField] private TMP_Text instructText;
     [SerializeField] private TMP_Text z_count;
 
+    public Animator fadeAnimator;
     void Awake()
     {
         if (Instance == null)
@@ -87,5 +87,18 @@ public class H_GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void LoadMenu()
+    {
+        Time.timeScale = 1f;
+        StartCoroutine(FadeTransition());
+    }
+
+    private IEnumerator FadeTransition()
+    {
+        fadeAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(0);
     }
 }

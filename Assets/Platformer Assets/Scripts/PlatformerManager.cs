@@ -23,6 +23,8 @@ public class PlatformerManager : MonoBehaviour
     private int timer;
 
     private int highScore;
+
+    public Animator fadeAnimator;
     
     
     // Start is called before the first frame update
@@ -89,7 +91,14 @@ public class PlatformerManager : MonoBehaviour
 
     public void MenuButton()
     {
-        Debug.Log("Add Menu Scene Later");
+        StartCoroutine(LoadMenu());
+    }
+
+    private IEnumerator LoadMenu()
+    {
+        fadeAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(0);
     }
 
     // Update is called once per frame

@@ -59,7 +59,8 @@ public class PinballManager : MonoBehaviour
     private AudioSource musicSource;
 
     private bool gameOver;
-    
+
+    public Animator fadeAnimator;
 
     void Awake()
     {
@@ -318,6 +319,18 @@ public class PinballManager : MonoBehaviour
     public void Retry()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void MenuButton()
+    {
+        StartCoroutine(ReturnToMenu());
+    }
+
+    private IEnumerator ReturnToMenu()
+    {
+        fadeAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(0);
     }
 
     public void SpawnBall()

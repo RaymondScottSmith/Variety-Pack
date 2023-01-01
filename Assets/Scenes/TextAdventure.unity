@@ -224,7 +224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43c5b9af0f5b64f4499cdad37f38d3e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoom: {fileID: 11400000, guid: d18dfb078aad8694b9e7b5d86f530423, type: 2}
 --- !u!114 &12902093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,17 +236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6392ea838a51cf4a9b5dceeed0ef199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayText: {fileID: 1262921971}
-  inputActions:
-  - {fileID: 11400000, guid: 92d9330dfd347654b9965b90215e0d1a, type: 2}
-  - {fileID: 11400000, guid: f3b9086767e60e74bb6bab07cc2800a4, type: 2}
-  - {fileID: 11400000, guid: 1391f8435eb4b974281d9d9e68f17036, type: 2}
-  - {fileID: 11400000, guid: 49f1a710081b18d46808b8bd8c54ca90, type: 2}
-  - {fileID: 11400000, guid: ea6e0ac9f63b67046825d76807a8f274, type: 2}
-  - {fileID: 11400000, guid: de82385bd100886458193564fc4c2fb5, type: 2}
-  roomNavigation: {fileID: 0}
-  interactionDescriptionsInRoom: []
-  interactableItems: {fileID: 0}
 --- !u!4 &12902094
 Transform:
   m_ObjectHideFlags: 0
@@ -275,7 +263,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f620666eb1f23bf48a7372055c4b90c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField: {fileID: 1553217195}
 --- !u!114 &12902096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,10 +275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090baf145fe364b469cebad8938c7f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useableItemList:
-  - {fileID: 11400000, guid: 7f5483738721f1a43a89632df701086f, type: 2}
-  - {fileID: 11400000, guid: 215841b660fa5bb4fac8beffe32a92fb, type: 2}
-  nounsInRoom: []
 --- !u!1 &90030687
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,6 +755,7 @@ MonoBehaviour:
   hasCode: 0
   inventory: []
   wearingSuit: 0
+  fadeAnimator: {fileID: 1342495474}
 --- !u!82 &216237749
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1882,6 +1866,7 @@ RectTransform:
   - {fileID: 1750836851}
   - {fileID: 1262921970}
   - {fileID: 1553217194}
+  - {fileID: 1342495475}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2982,6 +2967,113 @@ MonoBehaviour:
 
     To the north is a revolving door'
   newDoorDescription: The door revolves freely now.
+--- !u!1001 &1342495473
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 917514527}
+    m_Modifications:
+    - target: {fileID: 7102279542913675584, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_Name
+      value: FadePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e870cb353ba848440ae6d86246558569, type: 3}
+--- !u!95 &1342495474 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6038922825744288596, guid: e870cb353ba848440ae6d86246558569, type: 3}
+  m_PrefabInstance: {fileID: 1342495473}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1342495475 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7102279542913675585, guid: e870cb353ba848440ae6d86246558569, type: 3}
+  m_PrefabInstance: {fileID: 1342495473}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1440978225
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,7 +3132,11 @@ MonoBehaviour:
 
     There is a path to the west.
 
-    There is a path to the east.'
+    There is a path to the east.
+
+
+    Type
+    ''help'' for assistance.'
   roomDescriptions: []
   westExitDesc: You quickly duck into the western path, you have time to spare a
     single glance backwards at the eastern path before the blast doors close with

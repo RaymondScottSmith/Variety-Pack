@@ -53,6 +53,8 @@ public class BurManager : MonoBehaviour
 
     [SerializeField] private int oddsOfDolphin = 4;
 
+    public Animator fadeAnimator;
+
     private int highScore;
     void Awake()
     {
@@ -157,6 +159,18 @@ public class BurManager : MonoBehaviour
     public void ResetGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ReturnToMenu()
+    {
+        StartCoroutine(ReturnMenuAnimation());
+    }
+
+    private IEnumerator ReturnMenuAnimation()
+    {
+        fadeAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(0);
     }
 
     public void HitNetButton()

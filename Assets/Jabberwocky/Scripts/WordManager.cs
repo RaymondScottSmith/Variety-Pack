@@ -23,6 +23,8 @@ public class WordManager : MonoBehaviour
 
     private AudioSource myAudioSource;
 
+    public Animator fadeAnimator;
+
     private void Awake()
     {
         if (Instance == null)
@@ -127,5 +129,17 @@ public class WordManager : MonoBehaviour
     public void RetryGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void MenuButton()
+    {
+        StartCoroutine(ReturnToMenu());
+    }
+
+    private IEnumerator ReturnToMenu()
+    {
+        fadeAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(0);
     }
 }

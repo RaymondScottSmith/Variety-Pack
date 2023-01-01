@@ -29,6 +29,8 @@ public class FallGameManager : MonoBehaviour
 
     public bool isRunning = true;
 
+    public Animator fadeAnimator;
+
     private void Awake()
     {
         if (Instance == null)
@@ -43,7 +45,6 @@ public class FallGameManager : MonoBehaviour
 
     private void Start()
     {
-        Cursor.visible = false;
         isRunning = true;
         endPanel.SetActive(false);
         myAudio = GetComponent<AudioSource>();
@@ -59,6 +60,11 @@ public class FallGameManager : MonoBehaviour
             //InvokeRepeating("CheckAndSpawn", 0, checkInterval);
             InvokeRepeating("SpawnEveryInterval",0,0.5f);
         }
+    }
+
+    public void HideCursor()
+    {
+        Cursor.visible = false;
     }
 
     private void SpawnEveryInterval()
@@ -153,6 +159,18 @@ public class FallGameManager : MonoBehaviour
     public void ResetGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void MenuButton()
+    {
+        StartCoroutine(LoadMenu());
+    }
+
+    private IEnumerator LoadMenu()
+    {
+        fadeAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(0);
     }
 
     private IEnumerator EndGameSequence()

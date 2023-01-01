@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RunnerManager : MonoBehaviour
 {
     public static RunnerManager Instance;
 
     [Header("Controls")] public float moveSpeed = 1f;
-    
+
+    public Animator fadeAnimator;
 
     void Awake()
     {
@@ -24,6 +26,23 @@ public class RunnerManager : MonoBehaviour
     void Start()
     {
         
+    }
+
+    public void StopMovement()
+    {
+        moveSpeed = 0f;
+    }
+
+    public void MenuButton()
+    {
+        StartCoroutine(ReturnToMenu());
+    }
+
+    private IEnumerator ReturnToMenu()
+    {
+        fadeAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(0);
     }
 
     // Update is called once per frame

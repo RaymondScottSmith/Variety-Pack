@@ -28,6 +28,8 @@ public class SandwichManager : MonoBehaviour
 
     [SerializeField] private int lengthOfShift = 90;
 
+    public Animator fadeAnimator;
+
 
     private void Awake()
     {
@@ -54,6 +56,8 @@ public class SandwichManager : MonoBehaviour
     private void TickTime()
     {
         lengthOfShift--;
+        if (lengthOfShift < 0)
+            lengthOfShift = 0;
     }
 
     public Sandwich RandomSandwich()
@@ -80,11 +84,12 @@ public class SandwichManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (lengthOfShift < 0)
+        if (lengthOfShift <= 0 && !endPanel.activeSelf)
         {
+            timeText.text = "Shift Ends: " + lengthOfShift;
             EndGame();
         }
-        else
+        else if (!endPanel.activeSelf)
         {
             timeText.text = "Shift Ends: " + lengthOfShift;
         }
@@ -114,5 +119,19 @@ public class SandwichManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ReturnToMenu()
+    {
+        Time.timeScale = 1f;
+        StartCoroutine(MenuLoad());
+    }
+
+    private IEnumerator MenuLoad()
+    {
+        
+        fadeAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(0);
     }
 }

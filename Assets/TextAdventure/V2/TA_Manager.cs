@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,6 +37,8 @@ public class TA_Manager : MonoBehaviour
     public static TA_Manager Instance;
 
     public bool wearingSuit;
+
+    public Animator fadeAnimator;
 
     // Start is called before the first frame update
     void Awake()
@@ -143,7 +144,7 @@ public class TA_Manager : MonoBehaviour
                         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                         break;
                     case "menu":
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                        StartCoroutine(LoadMenu());
                         break;
                     case "help":
                         HandleHelpRequest();
@@ -166,6 +167,13 @@ public class TA_Manager : MonoBehaviour
         }
 
         InputComplete();
+    }
+
+    private IEnumerator LoadMenu()
+    {
+        fadeAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(0);
     }
 
     private void HandleHelpRequest(string separatedInputWord = null)

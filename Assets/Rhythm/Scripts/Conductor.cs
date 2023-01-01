@@ -125,7 +125,9 @@ public class Conductor : MonoBehaviour
 
     private void ReadMidiFromFile()
     {
-        midiFile = MidiFile.Read(AssetDatabase.GetAssetPath(currentSong.midiFile));
+        //midiFile = MidiFile.Read(AssetDatabase.GetAssetPath(currentSong.midiFile));
+        midiFile = MidiFile.Read(Path.Combine(Application.streamingAssetsPath, currentSong.midiFile.name+ ".mid"));
+        //midiFile = MidiFile.Read(Resources.Load<MidiFile>(currentSong.midiFile.name));
         //Invoke(nameof(GetDataFromMidi), songDelayInSeconds);
         GetDataFromMidi();
     }

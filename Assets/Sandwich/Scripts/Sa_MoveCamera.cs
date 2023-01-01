@@ -14,7 +14,7 @@ public class Sa_MoveCamera : MonoBehaviour
         transform.position = cameraPosition.position;
     }
     
-    [MenuItem("Help/Hide Flags/Show All Objects")]
+    //[MenuItem("Help/Hide Flags/Show All Objects")]
     private static void ShowAll()
     {
         var allGameObjects = Object.FindObjectsOfType<GameObject>();

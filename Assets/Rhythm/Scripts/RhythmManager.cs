@@ -23,6 +23,8 @@ public class RhythmManager : MonoBehaviour
 
     private int scoreMultiplier, score, scoreCount, highScore;
 
+    public Animator fadeAnimator;
+
     void Awake()
     {
         if (Instance == null)
@@ -59,6 +61,18 @@ public class RhythmManager : MonoBehaviour
     public void ResetGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void LoadMenu()
+    {
+        StartCoroutine(FadeToMenu());
+    }
+
+    private IEnumerator FadeToMenu()
+    {
+        fadeAnimator.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(0);
     }
 
     public void ShowEndPanel()
